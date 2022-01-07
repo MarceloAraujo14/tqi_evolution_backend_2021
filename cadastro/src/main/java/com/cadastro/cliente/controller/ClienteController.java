@@ -1,5 +1,6 @@
 package com.cadastro.cliente.controller;
 
+import com.cadastro.cliente.dto.ClienteCadastroDTO;
 import com.cadastro.cliente.dto.ClienteDTO;
 import com.cadastro.cliente.dto.ClienteReturnDTO;
 import com.cadastro.cliente.model.Cliente;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.reflect.Type;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/clientes")
@@ -29,14 +28,14 @@ public class ClienteController {
 
 
     @GetMapping(value = "/{email}")
-    public ResponseEntity<Optional<ClienteReturnDTO>> getClientByEmail(@PathVariable("email") String email){
-        return ResponseEntity.ok(mapper.map(clienteService.findByEmail(email), (Type) ClienteReturnDTO.class));
+    public ResponseEntity<ClienteReturnDTO> getClientByEmail(@PathVariable("email") String email){
+        return ResponseEntity.ok(clienteService.findByEmail(email));
     }
 
 
 
     @PostMapping(value = "/cadastrar")
-    public ResponseEntity<String> cadastro(@Valid @RequestBody ClienteDTO clienteDTO){
+    public ResponseEntity<String> cadastro(@Valid @RequestBody ClienteCadastroDTO clienteDTO){
         Cliente cliente = mapper.map(clienteDTO, Cliente.class);
         return ResponseEntity.ok(clienteService.cadastro(cliente));
     }

@@ -8,9 +8,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.util.List;
 
 
-@Data
+@Data @Getter @Setter
 @ToString
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @TypeAlias("cliente")
@@ -42,5 +41,6 @@ public class Cliente {
         this.enderecos = endereco;
 
     }
+
 
 }

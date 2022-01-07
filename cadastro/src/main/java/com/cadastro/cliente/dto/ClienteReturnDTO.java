@@ -6,9 +6,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.util.List;
 
-@Data
+@Data @Getter @Setter
 @ToString
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(indexName = "clientes")
@@ -27,4 +26,11 @@ public class ClienteReturnDTO {
     private Double renda;
 
     private List<Endereco> enderecos;
+
+    public void setEnderecos(List<Endereco> endereco) {
+
+        this.enderecos = endereco;
+
+    }
+
 }

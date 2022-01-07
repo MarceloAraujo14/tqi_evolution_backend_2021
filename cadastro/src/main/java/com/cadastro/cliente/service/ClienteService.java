@@ -1,8 +1,10 @@
 package com.cadastro.cliente.service;
 
+import com.cadastro.cliente.dto.ClienteReturnDTO;
 import com.cadastro.cliente.model.Cliente;
 import com.cadastro.cliente.model.Status;
 import com.cadastro.cliente.repository.ClienteRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,24 +13,25 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ClienteService {
 
     @Autowired
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
 
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public Optional<Cliente> findByEmail(String email) {
-        return clienteRepository.findByEmail(email);
+    public ClienteReturnDTO findByEmail(String email) {
+
+        return mapper.map(clienteRepository.findByEmail(email), ClienteReturnDTO.class);
     }
 
     public String cadastro(Cliente cliente) {
 
-        if(clienteRepository.findByEmail(cliente.getEmail()).isPresent()){
+        if(clienteRepository.findByEmail(cliente.getEmail()) != null){
             return "Email já cadastrado";
         }
         if(clienteRepository.findByCpf(cliente.getCpf()).isPresent()){
@@ -38,16 +41,16 @@ public class ClienteService {
         }else {
             cliente.setStatus(Status.ATIVO);
             clienteRepository.save(cliente);
-            return cliente.toString();
+            return "Cadastro realizado com sucesso.";
         }
 
     }
 
     public String update(Cliente clienteNovo, String email) {
-        Optional<Cliente> clienteAntigo = clienteRepository.findByEmail(email);
+        Cliente clienteAntigo = clienteRepository.findByEmail(email);
 
-        if(clienteAntigo.isPresent() && clienteAntigo.get().getStatus() == Status.ATIVO){
-            clienteNovo.setId(clienteAntigo.get().getId());
+        if(clienteAntigo.getStatus() == Status.ATIVO){
+            clienteNovo.setId(clienteAntigo.getId());
             clienteNovo.setStatus(Status.ATIVO);
             clienteRepository.save(clienteNovo);
             return "Dados atualizados com sucesso.";
