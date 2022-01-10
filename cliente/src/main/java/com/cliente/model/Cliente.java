@@ -1,15 +1,14 @@
 package com.cliente.model;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -18,10 +17,13 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @TypeAlias("cliente")
 @Document(indexName = "clientes")
 public class Cliente implements UserDetails {
+
+    @Autowired
+    private List<? extends GrantedAuthority> grantedAuthorities;
+
 
     @Id
     private String email;
@@ -51,13 +53,33 @@ public class Cliente implements UserDetails {
 
     }
 
-
-
+    public Cliente(List<? extends GrantedAuthority> grantedAuthorities,
+                   String email,
+                   String senha,
+                   String nome,
+                   String cpf,
+                   String rg,
+                   Double renda,
+                   List<Endereco> enderecos,
+                   UsuarioRole usuarioRole,
+                   Boolean locked,
+                   Boolean enable) {
+        this.grantedAuthorities = grantedAuthorities;
+        this.email = email;
+        this.senha = senha;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.renda = renda;
+        this.enderecos = enderecos;
+        this.usuarioRole = usuarioRole;
+        this.locked = locked;
+        this.enable = enable;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(usuarioRole.name());
-        return Collections.singletonList(authority);
+        return grantedAuthorities;
     }
 
     @Override

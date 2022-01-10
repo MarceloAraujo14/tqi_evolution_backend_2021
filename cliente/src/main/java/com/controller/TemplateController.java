@@ -8,13 +8,16 @@ import com.emprestimo.dto.EmprestimoDTO;
 import com.service.ClienteService;
 import com.service.EmprestimoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -24,6 +27,7 @@ public class TemplateController {
 
     private final ClienteService clienteService;
     private final EmprestimoService emprestimoService;
+
 
     @GetMapping(value = "/home")
     public ModelAndView getClientByEmail(@AuthenticationPrincipal Cliente user){

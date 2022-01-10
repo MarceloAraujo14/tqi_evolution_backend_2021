@@ -32,7 +32,6 @@ public class ClienteService implements UserDetailsService {
 
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return clienteRepository.findById(email).orElseThrow(
                 () -> new UsernameNotFoundException("Usuário não encontrado"));
