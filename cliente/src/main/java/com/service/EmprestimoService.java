@@ -6,6 +6,7 @@ import com.emprestimo.dto.EmprestimoAtualDTO;
 import com.emprestimo.dto.EmprestimoDTO;
 import com.emprestimo.model.Emprestimo;
 import com.emprestimo.model.StatusEmprestimo;
+import com.netflix.servo.monitor.DoubleGauge;
 import com.repository.EmprestimoRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -42,7 +43,7 @@ public class EmprestimoService {
             emprestimo.setDataSolicitacao(dataForm);
             emprestimo.setDataPrimParcela(emprestimoDTO.getDataPrimParcela());
             emprestimo.setStatusEmprestimo(StatusEmprestimo.SOLICITADO);
-            emprestimo.setValorParcela(emprestimo.getValor() / emprestimo.getParcelas());
+            emprestimo.setValorParcela(valorParcela(emprestimo.getValor(), emprestimo.getParcelas()));
             emprestimoRepository.save(emprestimo);
             return "{\"Empréstimo solicitado com sucesso\"}";
 
@@ -86,6 +87,9 @@ public class EmprestimoService {
         return !dataPrimeiraParcela.isAfter(dataAtual.plusMonths(3));
     }
 
+    private double valorParcela(double valor, double parcelas){
+        return Double.parseDouble(String.format("%.2f",(valor / parcelas)).replace(",","."));
+    }
 
     //
     //

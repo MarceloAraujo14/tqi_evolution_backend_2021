@@ -58,7 +58,7 @@
             <tbody>
             <tr th:each="emprestimo: ${emprestimos}">
                 <th th:text="*{emprestimo.codigo}">código</th>
-                <td th:text="*{emprestimo.valor}">valor</td>
+                <td th:text="*{emprestimo.valor}">valor parcela</td>
                 <td th:text="*{emprestimo.parcelas}">parcelas</td>
                 <td th:text="*{emprestimo.valorParcela}" >valorParcelas</td>
                 <td th:text="*{emprestimo.statusEmprestimo}">status</td>

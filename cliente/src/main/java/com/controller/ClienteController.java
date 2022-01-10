@@ -51,7 +51,7 @@ public class ClienteController {
             mv.addObject("emprestimo", emprestimo);
             return mv;
         }
-        mv.setViewName("redirect:/clientes/home");
+        mv.setViewName("redirect:/clientes/emprestimos");
         emprestimoService.solicitar(emprestimo, user);
         ClienteReturnDTO cliente = clienteService.findByEmail(user.getEmail());
         mv.addObject("cliente", cliente);

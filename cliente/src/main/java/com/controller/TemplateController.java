@@ -50,7 +50,6 @@ public class TemplateController {
     public ModelAndView listarEmprestimos(@AuthenticationPrincipal Cliente user){
 
         ModelAndView mv = new ModelAndView("lista-emprestimos");
-        System.out.println(emprestimoService.listarPorEmail(user.getEmail()));
         mv.addObject("emprestimos", emprestimoService.listarPorEmail(user.getEmail()));
         return mv;
     }
