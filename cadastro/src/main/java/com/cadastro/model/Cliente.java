@@ -1,6 +1,7 @@
 package com.cadastro.model;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -19,6 +20,9 @@ import java.util.List;
 @TypeAlias("cliente")
 @Document(indexName = "clientes")
 public class Cliente implements UserDetails {
+
+    @Autowired
+    private List<? extends GrantedAuthority> grantedAuthorities;
 
     @Id
     private String email;
@@ -42,7 +46,8 @@ public class Cliente implements UserDetails {
     private Boolean enable = false;
 
 
-    public Cliente(String email,
+    public Cliente(List<? extends GrantedAuthority> grantedAuthorities,
+                   String email,
                    String senha,
                    String nome,
                    String cpf,
@@ -52,6 +57,7 @@ public class Cliente implements UserDetails {
                    UsuarioRole usuarioRole,
                    Boolean locked,
                    Boolean enable) {
+        this.grantedAuthorities = grantedAuthorities;
         this.email = email;
         this.senha = senha;
         this.nome = nome;
