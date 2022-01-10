@@ -1,7 +1,6 @@
 package com.controller;
 
-import com.cliente.dto.ClienteDTO;
-import com.cliente.dto.ClienteReturnDTO;
+import com.cliente.dto.ClienteAtualDTO;
 import com.cliente.model.Cliente;
 import com.emprestimo.dto.EmprestimoAtualDTO;
 import com.emprestimo.dto.EmprestimoDTO;
@@ -14,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/clientes")
 public class ClienteController {
@@ -33,37 +35,38 @@ public class ClienteController {
     private final ModelMapper mapper;
 
 
-    @GetMapping(value = "/")
-    public ResponseEntity<ClienteReturnDTO> getClientByEmail(@AuthenticationPrincipal ClienteReturnDTO user){
-
-        return ResponseEntity.ok(clienteService.findByEmail(user.getEmail()));
-    }
-
     @PutMapping(value = "/atualizar/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> update(@Valid  @RequestBody ClienteDTO clienteDTO,  @AuthenticationPrincipal ClienteReturnDTO user){
+    public ResponseEntity<String> update(@Valid  @RequestBody ClienteAtualDTO clienteDTO, @AuthenticationPrincipal Cliente user){
         Cliente cliente = mapper.map(clienteDTO, Cliente.class);
         return ResponseEntity.ok(clienteService.update(cliente, user.getEmail()));
     }
 
     @PostMapping(value = "/emprestimo/solicitar", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> solicitar(@Valid @RequestBody EmprestimoDTO emprestimo,@AuthenticationPrincipal ClienteReturnDTO user){
+    public String solicitar(@Valid @ModelAttribute EmprestimoDTO emprestimo, BindingResult erros, @AuthenticationPrincipal Cliente user, Model model){
+        if(erros.hasErrors()){
+            return "form-emprestimo";
+        }else if(emprestimoService.solicitar(emprestimo, user).equals("{\"primParcela\": \"A data da primeira parcela deve ser até 3 meses da data de solicitação.\"}")){
+            model.addAttribute("data", "{\"primParcela\": \"A data da primeira parcela deve ser até 3 meses da data de solicitação.\"}");
+            return "form-emprestimo";
+        }
+        emprestimoService.solicitar(emprestimo, user);
+        return "emprestimos";
 
-        return ResponseEntity.ok(emprestimoService.solicitar(emprestimo, user));
     }
 
     @GetMapping(value = "/emprestimos", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Emprestimo>> getEmprestimo( @AuthenticationPrincipal ClienteReturnDTO user){
+    public ResponseEntity<List<Emprestimo>> getEmprestimo( @AuthenticationPrincipal Cliente user){
         return ResponseEntity.ok(emprestimoService.listarPorEmail(user.getEmail()));
     }
 
     @PutMapping(value = "/emprestimo/atualizar/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> atualizarEmprestimo(@PathVariable String codigo, @Valid @RequestBody EmprestimoAtualDTO emprestimoAtualDTO, @AuthenticationPrincipal ClienteReturnDTO user){
+    public ResponseEntity<String> atualizarEmprestimo(@PathVariable String codigo, @Valid @RequestBody EmprestimoAtualDTO emprestimoAtualDTO, @AuthenticationPrincipal Cliente user){
 
         return ResponseEntity.ok(emprestimoService.atualizar(codigo, emprestimoAtualDTO, user));
     }
 
     @PutMapping(value = "/emprestimo/cancelar/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> cancelarSolicitacao(@PathVariable String codigo, @AuthenticationPrincipal ClienteReturnDTO user){
+    public ResponseEntity<String> cancelarSolicitacao(@PathVariable String codigo, @AuthenticationPrincipal Cliente user){
 
         return ResponseEntity.ok(emprestimoService.cancelar(codigo, user));
     }

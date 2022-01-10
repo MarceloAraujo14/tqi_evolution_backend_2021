@@ -34,7 +34,7 @@ public class EmprestimoService {
 
     private final String dataForm = data.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-    public String solicitar(EmprestimoDTO emprestimoDTO, ClienteReturnDTO cliente) {
+    public String solicitar(EmprestimoDTO emprestimoDTO, Cliente cliente) {
         Emprestimo emprestimo = modelMapper.map(emprestimoDTO, Emprestimo.class);
         if (isPrimParcelaValid(emprestimo.getDataPrimParcela(), dataForm)) {
             emprestimo.setEmailCliente(cliente.getEmail());
@@ -55,7 +55,7 @@ public class EmprestimoService {
         return emprestimoRepository.findByEmailCliente(email);
     }
 
-    public String atualizar(String codigo, EmprestimoAtualDTO emprestimoAtualDTO, ClienteReturnDTO cliente) {
+    public String atualizar(String codigo, EmprestimoAtualDTO emprestimoAtualDTO, Cliente cliente) {
         Emprestimo emprestimo = modelMapper.map(emprestimoRepository.findById(codigo).get(), Emprestimo.class);
         if(emprestimo.getEmailCliente().equals(cliente.getEmail())){
             return "{\"Solicitação negada.\"}";
@@ -71,7 +71,7 @@ public class EmprestimoService {
 
     }
 
-    public String cancelar(String codigo, ClienteReturnDTO cliente) {
+    public String cancelar(String codigo, Cliente cliente) {
         Optional<Emprestimo> emprestimoCancelar = emprestimoRepository.findById(codigo);
         if(emprestimoCancelar.isPresent() && emprestimoCancelar.get().getEmailCliente().equals(cliente.getEmail())){
         Emprestimo emprestimo = modelMapper.map(emprestimoRepository.findById(codigo).get(), Emprestimo.class);

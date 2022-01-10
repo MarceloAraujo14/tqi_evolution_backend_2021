@@ -1,6 +1,7 @@
 package com.security.config;
 
 
+import com.cliente.model.UsuarioRole;
 import com.service.ClienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin();
 
