@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ClienteAtualDTO {
 
-
     @NotBlank(message = "O campo senha não pode estar em branco.")
     @Senha
     private String senha;

@@ -36,7 +36,7 @@ public class EmprestimoService {
     private final String dataForm = data.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
     public Emprestimo findById(String codigo) {
-        Emprestimo emprestimo = modelMapper.map(emprestimoRepository.findById(codigo), Emprestimo.class);
+        Emprestimo emprestimo = modelMapper.map(emprestimoRepository.findById(codigo).get(), Emprestimo.class);
         return emprestimo;
     }
 

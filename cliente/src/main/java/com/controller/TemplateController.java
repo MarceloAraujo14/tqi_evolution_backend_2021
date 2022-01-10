@@ -1,12 +1,16 @@
 package com.controller;
 
+import com.cliente.dto.ClienteAtualDTO;
 import com.cliente.model.Cliente;
+import com.cliente.model.Endereco;
+import com.cliente.model.TipoEndereco;
 import com.emprestimo.dto.EmprestimoDTO;
 import com.service.ClienteService;
 import com.service.EmprestimoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +43,16 @@ public class TemplateController {
         return mv;
     }
 
+    @GetMapping(value = "/atualizar")
+    public String atualizarCadastro(Model model){
+        model.addAttribute("tipos", TipoEndereco.values());
+        model.addAttribute("enderecos", new Endereco());
+        model.addAttribute("cliente", new ClienteAtualDTO());
+        return "atualizar-dados";
+    }
+
+
+
     @GetMapping(value = "/contratar")
     public ModelAndView solicitarEmprestimo(@AuthenticationPrincipal Cliente user){
 
@@ -58,9 +72,9 @@ public class TemplateController {
     @GetMapping(value = "/detalhes/{codigo}")
     public ModelAndView detalheEmprestmo(@AuthenticationPrincipal Cliente user, @PathVariable("codigo") String codigo){
         ModelAndView mv = new ModelAndView("detalhe-emprestimo");
-        System.out.println(emprestimoService.findById(codigo));
         if(user.getEmail().equals(emprestimoService.findById(codigo).getEmailCliente())){
-        mv.addObject("emprestimo", emprestimoService.findById(codigo));
+            mv.addObject("emprestimos", emprestimoService.listarPorEmail(user.getEmail()));
+            mv.addObject("emprestimo", emprestimoService.findById(codigo));
         }
         return mv;
     }

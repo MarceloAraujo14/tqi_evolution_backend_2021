@@ -2,6 +2,7 @@ package com.service;
 
 import com.cliente.dto.ClienteReturnDTO;
 import com.cliente.model.Cliente;
+import com.cliente.model.UsuarioRole;
 import com.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -38,7 +39,6 @@ public class ClienteService implements UserDetailsService {
     }
 
 
-
     public ClienteReturnDTO findByEmail(String email) {
 
         return mapper.map(clienteRepository.findByEmail(email), ClienteReturnDTO.class);
@@ -50,7 +50,11 @@ public class ClienteService implements UserDetailsService {
         Cliente clienteAntigo = clienteRepository.findByEmail(email);
         if(clienteAntigo.isEnabled() && clienteAntigo.isAccountNonLocked()){
             clienteNovo.setEmail(email);
+            clienteNovo.setUsuarioRole(UsuarioRole.CLIENTE);
+            clienteNovo.setEnable(true);
+            clienteNovo.setLocked(true);
             clienteNovo.setSenha(passwordEncoder.encode(clienteNovo.getSenha()));
+
             clienteRepository.save(clienteNovo);
             return "{\"Dados atualizados com sucesso.\"}";
         }else {

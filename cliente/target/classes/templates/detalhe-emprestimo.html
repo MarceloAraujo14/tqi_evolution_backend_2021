@@ -64,7 +64,7 @@
                 <td th:text="*{emprestimo.valorParcela}" >00,00</td>
                 <td th:text="*{emprestimo.statusEmprestimo}">status</td>
                 <td><a th:href="@{'/clientes/detalhes/'+ ${emprestimo.codigo}}">
-                    <button type="submit" class="btn btn-secondary btn-sm" th:text="${emprestimo.codigo}">Detalhes</button>
+                    <button type="submit" class="btn btn-secondary btn-sm">Detalhes</button>
                 </a>
                 </td>
             </tr>
@@ -75,33 +75,32 @@
     </div>
 </div>
 <div class="container-fluid shadow " style="background-color: rgb(148, 148, 148); height:100vh; font-size: 15px;" >
-    <div class="row" style="color: whitesmoke; padding-left: 5vw; padding-top: 2vh;" th:object="${cliente}">
+    <div class="row" style="color: whitesmoke; padding-left: 5vw; padding-top: 2vh;" th:object="${emprestimo}">
         <div class="col">
             <div>
-                Nome Completo:
-                <span th:text="*{nome}">Nome completo</span>
+                Código:
+                <span th:text="*{codigo}">código</span>
             </div>
 
             <br>
             <div>
-                Email:
-                <span th:text="*{email}">Email</span></div>
+                Valor: R$
+                <span th:text="*{valor}">000,00</span></div>
 
             <br>
-            <div>CPF:
-                <span th:text="*{cpf}">cpf</span></div>
+            <div>Quantidade de Parcelas:
+                <span th:text="*{parcelas}">parcelas</span></div>
 
             <br>
-            <div>RG:
-                <span th:text="*{rg}">RG</span></div>
+            <div>Valor da parcela: R$
+                <span th:text="*{valorParcela}">00,00</span></div>
 
             <br>
-            <div>Renda:
-                <span th:text="*{renda}">Renda</span></div>
-
-
-
+            <div>Renda do Cliente: R$
+                <span th:text="*{rendaCliente}">00,00</span></div>
             <br>
+            <div>Email do Cliente:
+                <span th:text="*{emailCliente}">exemplo1@gmail.com</span></div>
         </div>
     </div>
 
