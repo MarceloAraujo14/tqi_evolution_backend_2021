@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: userapp
+
+  config:
+    import: "optional:configserver:"
+
+  cloud:
+    config:
+      uri: http://localhost:8888
