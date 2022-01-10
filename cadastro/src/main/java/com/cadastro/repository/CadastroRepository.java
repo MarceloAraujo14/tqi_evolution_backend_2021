@@ -3,6 +3,7 @@ package com.cadastro.repository;
 import com.cadastro.model.Cliente;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,5 +18,7 @@ public interface CadastroRepository extends ElasticsearchRepository<Cliente, Str
     Optional<Cliente> findByCpf(String cpf);
 
     Optional<Cliente> findByRg(String rg);
+
+
 
 }
