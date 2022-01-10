@@ -36,7 +36,7 @@ public class EmprestimoService {
 
     public String solicitar(EmprestimoDTO emprestimoDTO, Cliente cliente) {
         Emprestimo emprestimo = modelMapper.map(emprestimoDTO, Emprestimo.class);
-        if (isPrimParcelaValid(emprestimo.getDataPrimParcela(), dataForm)) {
+
             emprestimo.setEmailCliente(cliente.getEmail());
             emprestimo.setRendaCliente(cliente.getRenda());
             emprestimo.setDataSolicitacao(dataForm);
@@ -45,9 +45,7 @@ public class EmprestimoService {
             emprestimo.setValorParcela(emprestimo.getValor() / emprestimo.getParcelas());
             emprestimoRepository.save(emprestimo);
             return "{\"Empréstimo solicitado com sucesso\"}";
-        } else {
-            return "{\"primParcela\": \"A data da primeira parcela deve ser até 3 meses da data de solicitação.\"}";
-        }
+
 
     }
 

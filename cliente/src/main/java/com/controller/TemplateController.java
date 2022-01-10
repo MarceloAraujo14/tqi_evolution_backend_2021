@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/clientes")
@@ -47,8 +49,9 @@ public class TemplateController {
     @GetMapping(value = "/emprestimos")
     public ModelAndView listarEmprestimos(@AuthenticationPrincipal Cliente user){
 
-        ModelAndView mv = new ModelAndView("form-emprestimo");
-        mv.addObject("emprestimo", new EmprestimoDTO());
+        ModelAndView mv = new ModelAndView("lista-emprestimos");
+        System.out.println(emprestimoService.listarPorEmail(user.getEmail()));
+        mv.addObject("emprestimos", emprestimoService.listarPorEmail(user.getEmail()));
         return mv;
     }
 

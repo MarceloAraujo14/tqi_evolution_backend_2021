@@ -25,6 +25,7 @@ public class EmprestimoDTO {
     private Double valorParcela;
 
     @NotBlank
+    @com.validation.constraints.Data
     private String dataPrimParcela;
 
 

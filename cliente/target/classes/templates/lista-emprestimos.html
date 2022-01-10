@@ -43,20 +43,31 @@
         </div>
     </nav>
 </header>
+<div class="container-fluid shadow " style="background-color: rgb(148, 148, 148); height:100vh; font-size: 15px;" >
+    <div class="row" style="color: whitesmoke; padding-left: 5vw; padding-top: 2vh;">
+        <table class="table table-dark table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Parcelas</th>
+                <th scope="col">Valor Parcela</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="emprestimo: ${emprestimos}">
+                <th th:text="*{emprestimo.codigo}">código</th>
+                <td th:text="*{emprestimo.valor}">valor</td>
+                <td th:text="*{emprestimo.parcelas}">parcelas</td>
+                <td th:text="*{emprestimo.valorParcela}" >valorParcelas</td>
+                <td th:text="*{emprestimo.statusEmprestimo}">status</td>
+            </tr>
 
-<div class="container-fluid shadow " style="background-color: rgb(148, 148, 148); height: 12vh; font-size: 15px;" >
-    <div class="row" style="color: whitesmoke; padding-left: 5vw; padding-top: 2vh;" th:object="${cliente}">
-        <div class="col">
-            Olá,
-            <div th:text="*{nome}"></div>
-        </div>
-        <div class="col">
-            Email
-            <div th:text="*{email}"></div>
-        </div>
+        </table>
+
 
     </div>
-
 </div>
 
 

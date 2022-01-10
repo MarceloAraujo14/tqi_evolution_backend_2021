@@ -1,6 +1,8 @@
 package com.controller;
 
 import com.cliente.dto.ClienteAtualDTO;
+import com.cliente.dto.ClienteDTO;
+import com.cliente.dto.ClienteReturnDTO;
 import com.cliente.model.Cliente;
 import com.emprestimo.dto.EmprestimoAtualDTO;
 import com.emprestimo.dto.EmprestimoDTO;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -42,15 +45,17 @@ public class ClienteController {
     }
 
     @PostMapping(value = "/emprestimo/solicitar", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String solicitar(@Valid @ModelAttribute EmprestimoDTO emprestimo, BindingResult erros, @AuthenticationPrincipal Cliente user, Model model){
+    public ModelAndView solicitar(@Valid @ModelAttribute("emprestimo") EmprestimoDTO emprestimo, BindingResult erros, @AuthenticationPrincipal Cliente user){
+        ModelAndView mv = new ModelAndView("form-emprestimo");
         if(erros.hasErrors()){
-            return "form-emprestimo";
-        }else if(emprestimoService.solicitar(emprestimo, user).equals("{\"primParcela\": \"A data da primeira parcela deve ser até 3 meses da data de solicitação.\"}")){
-            model.addAttribute("data", "{\"primParcela\": \"A data da primeira parcela deve ser até 3 meses da data de solicitação.\"}");
-            return "form-emprestimo";
+            mv.addObject("emprestimo", emprestimo);
+            return mv;
         }
+        mv.setViewName("redirect:/clientes/home");
         emprestimoService.solicitar(emprestimo, user);
-        return "emprestimos";
+        ClienteReturnDTO cliente = clienteService.findByEmail(user.getEmail());
+        mv.addObject("cliente", cliente);
+        return mv;
 
     }
 

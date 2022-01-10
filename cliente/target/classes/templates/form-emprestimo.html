@@ -35,7 +35,7 @@
               Empréstimos
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              <li><a class="dropdown-item" href="http://localhost:8080/clientes/solicitar">Contratar</a></li>
+              <li><a class="dropdown-item" href="http://localhost:8080/clientes/contratar">Contratar</a></li>
               <li><a class="dropdown-item" href="http://localhost:8080/clientes/emprestimos">Empréstimos</a></li>
             </ul>
           </li>
@@ -51,8 +51,8 @@
 
   <h4 style="padding-bottom: 2vh;">Contratação de Empréstimo Pessoal</h4>
 
-  <form class="form-signin" method="POST" th:action="@{/emprestimo/solicitar}" th:object="${emprestimo}" >
-    <h5>Dados do Contratante</h5>
+  <form class="form-signin" method="POST" th:action="@{/clientes/emprestimo/solicitar}" th:object="${emprestimo}" >
+    <h5>Dados do Empréstimo</h5>
     <div class="form-row">
 
       <div class="row">
