@@ -1,0 +1,21 @@
+
+V
+java:S4684("@Replace this persistent entity with a simple POJO or DTO object.(ÉçÇé
+V
+java:S4684."@Replace this persistent entity with a simple POJO or DTO object.(ê‡ò
+V
+java:S46844"@Replace this persistent entity with a simple POJO or DTO object.(€Àø•
+[
+java:S46849"@Replace this persistent entity with a simple POJO or DTO object.(ßÖŸÄùÿÿÿÿ
+[
+java:S46849"@Replace this persistent entity with a simple POJO or DTO object.(ßÖŸÄùÿÿÿÿ
+V
+java:S4684?"@Replace this persistent entity with a simple POJO or DTO object.(æÜ÷Ì
+M
+java:S1128"7Remove this unused import 'com.cliente.dto.ClienteDTO'.(å¹È÷
+S
+java:S1128"=Remove this unused import 'com.cliente.dto.ClienteReturnDTO'.(¯ƒ³
+[
+java:S1128"9Remove this unused import 'org.springframework.ui.Model'.(ê†ıÿÿÿÿ8ÅÉ÷ˆä/
+k
+java:S1128"IRemove this unused import 'org.springframework.web.servlet.ModelAndView'.(Ç¨ÿäûÿÿÿÿ8ÅÉ÷ˆä/

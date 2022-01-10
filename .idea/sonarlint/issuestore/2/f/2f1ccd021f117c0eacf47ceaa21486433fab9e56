@@ -1,0 +1,7 @@
+
+Z
+java:S1128"=Remove this unused import 'com.cliente.dto.ClienteReturnDTO'.(¯ƒ³8Èîù‚ä/
+f
+java:S3655;"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(¥û‹±
+f
+java:S3655M"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(¥û‹±

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cadastro/cadastro.iml" filepath="$PROJECT_DIR$/cadastro/cadastro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cliente/cliente.iml" filepath="$PROJECT_DIR$/cliente/cliente.iml" />
+      <module fileurl="file://$PROJECT_DIR$/config-server/config-server.iml" filepath="$PROJECT_DIR$/config-server/config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-discovery/service-discovery.iml" filepath="$PROJECT_DIR$/service-discovery/service-discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/userapp/userapp.iml" filepath="$PROJECT_DIR$/userapp/userapp.iml" />
+    </modules>
+  </component>
+</project>
