@@ -19,7 +19,7 @@ public class DuplicatedCPFValidation implements ConstraintValidator<DuplicatedCP
     @Override
     public boolean isValid(String cpf, ConstraintValidatorContext constraintValidatorContext) {
 
-        return (cpf == null || cpf.isEmpty() || cadastroRepository.findByCpf(cpf).isEmpty());
+        return (cadastroRepository.findByCpf(cpf).isEmpty());
     }
 
 }

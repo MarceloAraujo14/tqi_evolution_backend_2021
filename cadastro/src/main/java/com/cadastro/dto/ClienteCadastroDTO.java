@@ -1,9 +1,7 @@
 package com.cadastro.dto;
 
 import com.cadastro.model.Endereco;
-import com.validation.constraints.Nome;
-import com.validation.constraints.RG;
-import com.validation.constraints.Senha;
+import com.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
@@ -25,6 +23,7 @@ public class ClienteCadastroDTO {
 
     @NotBlank(message = "O campo email não pode estar em branco.")
     @Email(message = "Email inválido.")
+    @DuplicatedEmail
     private String email;
 
     @NotBlank(message = "O campo senha não pode estar em branco.")
@@ -38,19 +37,20 @@ public class ClienteCadastroDTO {
 
     @NotBlank(message = "O campo CPF não pode estar em branco.")
     @CPF(message = "CPF inválido.")
+    @DuplicatedCPF
     private String cpf;
 
     @NotBlank(message = "O campo RG não pode estar em branco.")
     @RG
+    @DuplicatedRG
     private String rg;
 
     @NotNull(message = "O campo não pode estar em branco.")
     private Double renda;
 
-    @Valid
     private List<Endereco> enderecos;
 
-    public void setEnderecos(@Valid @RequestBody List<Endereco> endereco) {
+    public void setEnderecos(List<Endereco> endereco) {
 
         this.enderecos = endereco;
 

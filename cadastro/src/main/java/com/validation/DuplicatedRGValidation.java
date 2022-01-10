@@ -18,6 +18,6 @@ public class DuplicatedRGValidation implements ConstraintValidator<DuplicatedRG,
 
     @Override
     public boolean isValid(String rg, ConstraintValidatorContext constraintValidatorContext) {
-        return (rg == null || rg.isEmpty() || cadastroRepository.findByRg(rg).isEmpty());
+        return (cadastroRepository.findByRg(rg).isEmpty());
     }
 }

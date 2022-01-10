@@ -20,6 +20,6 @@ public class DuplicatedEmailValidation implements ConstraintValidator<Duplicated
     @Override
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
 
-        return (email == null || email.isEmpty() || cadastroRepository.findByEmail(email).getEmail().isEmpty());
+        return (cadastroRepository.findById(email).isEmpty());
     }
 }

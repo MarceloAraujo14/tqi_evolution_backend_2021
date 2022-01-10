@@ -7,20 +7,15 @@ import com.cadastro.model.TipoEndereco;
 import com.cadastro.service.CadastroService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -30,43 +25,28 @@ public class CadastroController {
     private final CadastroService cadastroService;
     private final ModelMapper mapper;
 
-    @GetMapping("/home")
-    public String home(){
-        return "home";
-    }
 
-    @GetMapping(value = "/novocadastro")
+    @GetMapping(value = "/novo")
     public String paginaCadastro(Model model){
         model.addAttribute("tipos", TipoEndereco.values());
         model.addAttribute("enderecos", new Endereco());
         model.addAttribute("cliente", new ClienteCadastroDTO());
-        return "cadastro";
+        return "form-cadastro";
     }
 
-    @PostMapping(value = "/cadastrar")
-    public String cadastro(@Valid ClienteCadastroDTO clienteDTO, @Valid Endereco endereco, BindingResult errors, Model model){
+    @PostMapping(value = "/novo")
+    public String cadastro(@Valid @ModelAttribute("cliente") ClienteCadastroDTO clienteDTO, BindingResult clienteErrors,  @Valid @ModelAttribute("enderecos") Endereco endereco, BindingResult enderecoErrors, Model model){
 
-        if(errors.hasErrors()){
-            model.addAttribute("cliente", clienteDTO);
+        if(clienteErrors.hasErrors() || enderecoErrors.hasErrors()){
+            model.addAttribute("tipos", TipoEndereco.values());
+            return "form-cadastro";
         }
-
+        model.addAttribute("mensagem", "Cadastro bem sucedido");
         clienteDTO.setEnderecos(List.of(endereco));
-        System.out.println(clienteDTO);
-
-
         Cliente cliente = mapper.map(clienteDTO, Cliente.class);
         cadastroService.cadastro(cliente);
         return "home";
     }
-
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
-        return ResponseEntity.ok(cadastroService.handleException(ex));
-    }
-
-    //Metodos não utilizados pela interface
 
 
 }
