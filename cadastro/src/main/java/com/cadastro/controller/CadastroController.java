@@ -22,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CadastroController {
 
+
     private final CadastroService cadastroService;
     private final ModelMapper mapper;
 
