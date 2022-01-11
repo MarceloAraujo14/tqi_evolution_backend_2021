@@ -3,11 +3,10 @@ package com.controller;
 import com.cliente.dto.ClienteAtualDTO;
 import com.cliente.dto.ClienteReturnDTO;
 import com.cliente.model.Cliente;
-import com.cliente.model.Endereco;
-import com.cliente.model.TipoEndereco;
 import com.emprestimo.dto.EmprestimoAtualDTO;
 import com.emprestimo.dto.EmprestimoDTO;
 import com.emprestimo.model.Emprestimo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.ClienteService;
 import com.service.EmprestimoService;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -35,45 +32,35 @@ public class ClienteController {
     private final EmprestimoService emprestimoService;
     private final ModelMapper mapper;
 
+
     //Metodos Cliente
 
-//    @PutMapping(value = "/atualizar/", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<String> update(@Valid  @RequestBody ClienteAtualDTO clienteDTO, @AuthenticationPrincipal Cliente user){
-//        Cliente cliente = mapper.map(clienteDTO, Cliente.class);
-//        return ResponseEntity.ok(clienteService.update(cliente, user.getEmail()));
-//    }
 
-
-    @PostMapping(value = "/atualizar")
-    public String cadastro(@Valid @ModelAttribute("cliente") ClienteAtualDTO clienteDTO, BindingResult clienteErrors,  @Valid @ModelAttribute("enderecos") Endereco endereco, BindingResult enderecoErrors, Model model, @AuthenticationPrincipal Cliente user){
-
-        if(clienteErrors.hasErrors() || enderecoErrors.hasErrors()){
-            model.addAttribute("tipos", TipoEndereco.values());
-            return "atualizar-dados";
+    @GetMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getClientByEmail(@AuthenticationPrincipal Cliente user, @PathVariable String email){
+        if(Objects.equals(user.getEmail(), email)){
+        return ResponseEntity.ok(clienteService.findByEmail(email).toString());}
+        else {
+            return ResponseEntity.ok("Usuário não encontrado.");
         }
-
-        clienteDTO.setEnderecos(List.of(endereco));
-        Cliente cliente = mapper.map(clienteDTO, Cliente.class);
-        clienteService.update(cliente, user.getEmail());
-        model.addAttribute("cliente", clienteService.findByEmail(user.getEmail()));
-        return "dados-cliente";
     }
 
-    //Metodos Emprestimos
 
-    @PostMapping(value = "/emprestimo/solicitar", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ModelAndView solicitar(@Valid @ModelAttribute("emprestimo") EmprestimoDTO emprestimo, BindingResult erros, @AuthenticationPrincipal Cliente user){
-        ModelAndView mv = new ModelAndView("form-emprestimo");
-        if(erros.hasErrors()){
-            mv.addObject("emprestimo", emprestimo);
-            return mv;
-        }
-        mv.setViewName("redirect:/clientes/emprestimos");
-        emprestimoService.solicitar(emprestimo, user);
-        ClienteReturnDTO cliente = clienteService.findByEmail(user.getEmail());
-        mv.addObject("cliente", cliente);
-        return mv;
+    @PutMapping(value = "/atualizar/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(@Valid  @RequestBody ClienteAtualDTO clienteDTO, @AuthenticationPrincipal Cliente user, @PathVariable String email){
+        if(Objects.equals(user.getEmail(), email)){
+        Cliente cliente = mapper.map(clienteDTO, Cliente.class);
+        return ResponseEntity.ok(clienteService.update(cliente, user.getEmail()));}
+        else return ResponseEntity.ok("Usuário não encontrado");
+    }
 
+
+    //Metodos Emprestimo
+
+    @PostMapping(value = "/emprestimo/contratar", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> solicitar(@Valid @RequestBody EmprestimoDTO emprestimo,@AuthenticationPrincipal Cliente user){
+
+        return ResponseEntity.ok(emprestimoService.solicitar(emprestimo, user));
     }
 
     @GetMapping(value = "/emprestimos", produces = MediaType.APPLICATION_JSON_VALUE)

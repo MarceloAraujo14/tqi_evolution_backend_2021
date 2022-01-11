@@ -1,6 +1,7 @@
 package com.cliente.dto;
 
 import com.cliente.model.Endereco;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.*;
 
 import java.util.List;
@@ -13,8 +14,6 @@ import java.util.List;
 public class ClienteReturnDTO {
 
     private String email;
-
-    private String senha;
 
     private String nome;
 
@@ -33,4 +32,5 @@ public class ClienteReturnDTO {
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
+
 }
