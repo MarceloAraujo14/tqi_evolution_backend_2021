@@ -1,4 +1,4 @@
-Este projeto foi elaborado como uma solução para o desafio proposto a todos que concluíram o Bootcamp TQI na plataforma da Digital Innovation One.
+Este projeto foi elaborado como uma solução para o desafio proposto a todos que concluíram o Bootcamp TQI na plataforma da Digital Innovation One e promoveu um grande crescimento a nível de conhecimento em mim e nos outros participantes do Bootcamp. Experimentar uma pequena demanda do mercado real mostra como ainda temos espaço para evoluir e a vontade de finalizar o projeto como planejado foi maior do que a vontade pela entrega. Fomos movidos pelo desafio. 
 
 ---
 **O desafio:**
