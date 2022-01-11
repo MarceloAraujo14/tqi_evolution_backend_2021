@@ -124,7 +124,7 @@ https://youtu.be/uDQ6VBCfV34
 	 ```
 	 - GET - localhost:8080/clientes/detalhes/{código do empréstimo}
 	 ```
-	- Postman: 
+   - Postman: 
 	  - Retornar dados do Cliente Logado: 
 	  ```
 	  - POST - localhost:8080/clientes/{email}
