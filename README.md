@@ -67,9 +67,14 @@ https://youtu.be/uDQ6VBCfV34
 	 - POST - localhost:8080/cadastro/novo
 	 ```
 
-	 - Postman:
-	  - Enviar Dados no Body: POST - localhost:8080/cadastro/cadastrar
+	
+   - Postman:
+	  - Enviar Dados no Body: 
+	  ```
+	  - POST - localhost:8080/cadastro/cadastrar
+	  ```
 	  - Formato J-son: 
+	  
 ```
 { "nome":  "Anakin Skywalker",
 "email":  "darth_vader@gmail.com",
