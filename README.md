@@ -28,6 +28,22 @@ Uma empresa de empréstimo precisa criar um sistema de análise de crédito para
   Responsável por assegurar que as informações solicitadas sejam retornadas apenas a um usuário logado com o papel de CLIENTE atrelado a ele, validar o empréstimo solicitado retornando os erros encontrados na submissão de solicitação e cadastrar o empréstimo atrelado as informações do usuário solicitante no banco de dados do servidor.
  
 ---
+**Implementação:**
+A ideia desde o começo foi montar a aplicação na arquitetura de microsserviço, para isso escolhi o framework Spring Boot que com todas as suas ferramentas facilitam o desenvolvimento de aplicações web, permitindo através da ferramenta Initalizer (https://start.spring.io) pré-configurar a aplicação com todas as dependências necessárias e com poucas linhas de código já ter uma api disponível.
+Seguindo essa ideia, montei a aplicação de cadastro e cliente como uma só para facilitar o desenvolvimento.
+Criando a entidade cliente, configurando a interface repositório, os controllers para export os end-points e a conexão com o banco de dados Elasticsearch. 
+O banco foi gerado através de um container Docker com a imagem disponível em https://www.elastic.co/guide/en/elasticsearch/reference/7.16/docker.html onde estão as instruções para baixar e rodar a imagem diretamente do container na porta 9200.
+
+---
+**Comunicação Cloud:**
+
+A comunicação entre os microsserviços foi feita utilizando o Config-Client na aplicação, que permite que os serviços se conectem ao Config-Server para buscar a configuração necessária que foi disponibilizada no repositório online git: 
+```
+https://github.com/MarceloAraujo14/cliente-config.git 
+```
+O Eureka da Netflix que por sua vez, permite que os microsserviços se "registrem" com seu endereço e possam ser encontrados pelo Gateway (nossa conexão com serviços externos) que funciona como um "portão" para as requisições, recebendo-as e buscando no Eureka o caminho do serviço especificado e devolvendo ao cliente que solicitou. 
+
+---
   **End-points:**
   
 **UserApp:** 
