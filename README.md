@@ -31,7 +31,7 @@ Uma empresa de empréstimo precisa criar um sistema de análise de crédito para
 **Implementação:**
 A ideia desde o começo foi montar a aplicação na arquitetura de microsserviço, para isso escolhi o framework Spring Boot que com todas as suas ferramentas facilitam o desenvolvimento de aplicações web, permitindo através da ferramenta Initalizer (https://start.spring.io) pré-configurar a aplicação com todas as dependências necessárias e com poucas linhas de código já ter uma api disponível.
 Seguindo essa ideia, montei a aplicação de cadastro e cliente como uma só para facilitar o desenvolvimento.
-Criando a entidade cliente, configurando a interface repositório, os controllers para export os end-points e a conexão com o banco de dados Elasticsearch. 
+Criando a entidade cliente, configurando a interface repositório, os controllers para export os end-points e a conexão com o banco de dados Elasticsearch. Que é um banco NoSQL orientado a documentos indexados em memória, o que trás um desempenho incrível em buscas.
 O banco foi gerado através de um container Docker com a imagem disponível em https://www.elastic.co/guide/en/elasticsearch/reference/7.16/docker.html onde estão as instruções para baixar e rodar a imagem diretamente do container na porta 9200.
 
 ---
@@ -42,6 +42,10 @@ A comunicação entre os microsserviços foi feita utilizando o Config-Client na
 https://github.com/MarceloAraujo14/cliente-config.git 
 ```
 O Eureka da Netflix que por sua vez, permite que os microsserviços se "registrem" com seu endereço e possam ser encontrados pelo Gateway (nossa conexão com serviços externos) que funciona como um "portão" para as requisições, recebendo-as e buscando no Eureka o caminho do serviço especificado e devolvendo ao cliente que solicitou. 
+
+---
+Vídeo demonstrando o funcionamento da interface da API
+https://youtu.be/uDQ6VBCfV34
 
 ---
   **End-points:**
