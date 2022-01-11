@@ -96,6 +96,7 @@ Uma empresa de empréstimo precisa criar um sistema de análise de crédito para
 	 - Acessar detalhe de um Empréstimo: 
 	 ```
 	 - GET - localhost:8080/clientes/detalhes/{código do empréstimo}
+	 ```
 	- Postman: 
 	  - Retornar dados do Cliente Logado: 
 	  ```
