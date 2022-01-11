@@ -66,7 +66,8 @@ https://youtu.be/uDQ6VBCfV34
 	 ```
 	 - POST - localhost:8080/cadastro/novo
 	 ```
-	- Postman:
+
+	 - Postman:
 	  - Enviar Dados no Body: POST - localhost:8080/cadastro/cadastrar
 	  - Formato J-son: 
 ```
