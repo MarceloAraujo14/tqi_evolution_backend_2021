@@ -1,9 +1,12 @@
 package com.cadastro.service;
 
+import com.cadastro.dto.ClienteCadastroDTO;
 import com.cadastro.model.Cliente;
 import com.cadastro.model.UsuarioRole;
 import com.cadastro.repository.CadastroRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
@@ -16,13 +19,14 @@ import java.util.Map;
 @AllArgsConstructor
 public class CadastroService {
 
-
+    @Autowired
+    private final ModelMapper mapper;
     private final CadastroRepository cadastroRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
 
-    public String cadastro(Cliente cliente) {
-
+    public String cadastro(ClienteCadastroDTO clienteDTO) {
+            Cliente cliente = mapper.map(clienteDTO, Cliente.class);
             cliente.setUsuarioRole(UsuarioRole.CLIENTE);
             cliente.setEnable(true);
             cliente.setLocked(true);

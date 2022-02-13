@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface ClienteRepository extends CrudRepository<Cliente, String> {
+
     Cliente findByEmail(String email);
 
     Optional<Cliente> findByCpf(String cpf);

@@ -21,13 +21,12 @@ public class CadastroController {
 
     @Autowired
     private final CadastroService cadastroService;
-    @Autowired
-    private final ModelMapper mapper;
+
 
     @PostMapping(value = "/cadastrar", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cadastro(@Valid @RequestBody ClienteCadastroDTO clienteDTO){
-        Cliente cliente = mapper.map(clienteDTO, Cliente.class);
-        return ResponseEntity.ok(cadastroService.cadastro(cliente));
+
+        return ResponseEntity.ok(cadastroService.cadastro(clienteDTO));
     }
 
 

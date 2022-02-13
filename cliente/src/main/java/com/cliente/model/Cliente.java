@@ -23,7 +23,6 @@ public class Cliente implements UserDetails {
     @Autowired
     private List<? extends GrantedAuthority> grantedAuthorities;
 
-
     @Id
     private String email;
 

@@ -1,12 +1,10 @@
 package com.controller;
 
 import com.cliente.dto.ClienteAtualDTO;
-import com.cliente.dto.ClienteReturnDTO;
 import com.cliente.model.Cliente;
 import com.emprestimo.dto.EmprestimoAtualDTO;
 import com.emprestimo.dto.EmprestimoDTO;
 import com.emprestimo.model.Emprestimo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.ClienteService;
 import com.service.EmprestimoService;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +40,7 @@ public class ClienteController {
         if(Objects.equals(user.getEmail(), email)){
         return ResponseEntity.ok(clienteService.findByEmail(email).toString());}
         else {
-            return ResponseEntity.ok("Usuário não tem permissão para realizar essa requisição");
+            return ResponseEntity.ok("Usuário não tem permissão para realizar essa requisição"); //
         }
     }
 
