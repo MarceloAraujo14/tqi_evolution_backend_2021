@@ -22,6 +22,6 @@ public class DuplicatedEmailValidation implements ConstraintValidator<Duplicated
 
 
 
-        return cadastroRepository.findByEmail(email) == null;
+        return cadastroRepository.findById(email).isEmpty();
     }
 }

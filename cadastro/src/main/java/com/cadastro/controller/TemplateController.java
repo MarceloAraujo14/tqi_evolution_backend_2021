@@ -1,11 +1,11 @@
 package com.cadastro.controller;
+
 import com.cadastro.dto.ClienteCadastroDTO;
-import com.cadastro.model.Cliente;
 import com.cadastro.model.Endereco;
 import com.cadastro.model.TipoEndereco;
 import com.cadastro.service.CadastroService;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,11 +17,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@AllArgsConstructor
 public class TemplateController {
 
     private final CadastroService cadastroService;
     private final ModelMapper mapper;
+
+    @Autowired
+    public TemplateController(CadastroService cadastroService, ModelMapper mapper) {
+        this.cadastroService = cadastroService;
+        this.mapper = mapper;
+    }
 
 
     @GetMapping(value = "/novo")
@@ -41,8 +46,7 @@ public class TemplateController {
         }
         model.addAttribute("mensagem", "Cadastro bem sucedido");
         clienteDTO.setEnderecos(List.of(endereco));
-        Cliente cliente = mapper.map(clienteDTO, Cliente.class);
-        cadastroService.cadastro(cliente);
+        cadastroService.cadastro(clienteDTO);
         return "home";
     }
 

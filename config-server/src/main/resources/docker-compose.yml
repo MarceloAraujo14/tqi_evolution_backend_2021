@@ -1,0 +1,11 @@
+# Acesse a pasta onde este arquivo está localizado pelo terminal de digite docker-compose -f docker-compose.yml up para
+# criar o container com o banco de dados postgres
+version: '3.5'
+
+services:
+  database:
+    container_name: tqi_bank
+    image: postgres:14.2
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres

@@ -1,30 +1,35 @@
 package com.cadastro.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.data.util.ProxyUtils;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
-@Data @Getter @Setter @EqualsAndHashCode
+@Getter @Setter
 @ToString
 @NoArgsConstructor
-@TypeAlias("cliente")
-@Document(indexName = "clientes")
-public class Cliente implements UserDetails {
+@Entity
+@Table(name = "clientes")
+public class Cliente /*implements UserDetails*/ {
 
-    @Autowired
-    private List<? extends GrantedAuthority> grantedAuthorities;
+
+   /* @Autowired
+    private List<? extends GrantedAuthority> grantedAuthorities;*/
 
     @Id
+    @Column(name = "email", nullable = false)
     private String email;
 
     private String senha;
@@ -46,7 +51,7 @@ public class Cliente implements UserDetails {
     private Boolean enable = false;
 
 
-    public Cliente(List<? extends GrantedAuthority> grantedAuthorities,
+    public Cliente(/*List<? extends GrantedAuthority> grantedAuthorities,*/
                    String email,
                    String senha,
                    String nome,
@@ -57,7 +62,7 @@ public class Cliente implements UserDetails {
                    UsuarioRole usuarioRole,
                    Boolean locked,
                    Boolean enable) {
-        this.grantedAuthorities = grantedAuthorities;
+//        this.grantedAuthorities = grantedAuthorities;
         this.email = email;
         this.senha = senha;
         this.nome = nome;
@@ -79,39 +84,53 @@ public class Cliente implements UserDetails {
 
 
 
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(usuarioRole.name());
+//        return Collections.singletonList(authority);
+//    }
+//
+//    @Override
+//    public String getPassword() {
+//        return senha;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return email;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return locked;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return enable;
+//    }
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(usuarioRole.name());
-        return Collections.singletonList(authority);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || ProxyUtils.getUserClass(this) != ProxyUtils.getUserClass(o))
+            return false;
+        Cliente cliente = (Cliente) o;
+        return email != null && Objects.equals(email, cliente.email);
     }
 
     @Override
-    public String getPassword() {
-        return senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return locked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enable;
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

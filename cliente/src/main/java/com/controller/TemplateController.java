@@ -30,12 +30,13 @@ public class TemplateController {
     private final EmprestimoService emprestimoService;
     private final ModelMapper mapper;
 
+    //TODO: passar as lógicas de validação pro service.
 
     @GetMapping(value = "/home")
     public ModelAndView getClientByEmail(@AuthenticationPrincipal Cliente user){
 
         ModelAndView mv = new ModelAndView("home-cliente");
-        mv.addObject("cliente", clienteService.findByEmail(user.getEmail()));
+        mv.addObject("cliente", clienteService.findById(user.getEmail()));
 
         return mv;
     }
@@ -44,8 +45,8 @@ public class TemplateController {
     @GetMapping(value = "/dados")
     public ModelAndView mostraDadosCliente(@AuthenticationPrincipal Cliente user){
         ModelAndView mv = new ModelAndView("dados-cliente");
-        mv.addObject("cliente", clienteService.findByEmail(user.getEmail()));
-        mv.addObject("enderecos", clienteService.findByEmail(user.getEmail()).getEnderecos().get(0));
+        mv.addObject("cliente", clienteService.findById(user.getEmail()));
+        mv.addObject("enderecos", clienteService.encontrarEndereco(user.getEmail()));
         return mv;
     }
 
@@ -70,8 +71,8 @@ public class TemplateController {
 
         clienteDTO.setEnderecos(List.of(endereco));
         Cliente cliente = mapper.map(clienteDTO, Cliente.class);
-        clienteService.update(cliente, user.getEmail());
-        model.addAttribute("cliente", clienteService.findByEmail(user.getEmail()));
+        clienteService.update(clienteDTO, cliente, user.getEmail());
+        model.addAttribute("cliente", clienteService.findById(user.getEmail()));
         return "dados-cliente";
     }
 
@@ -95,8 +96,8 @@ public class TemplateController {
             return mv;
         }
         mv.setViewName("redirect:/clientes/emprestimos");
-        emprestimoService.solicitar(emprestimo, user);
-        ClienteReturnDTO cliente = clienteService.findByEmail(user.getEmail());
+        emprestimoService.solicitar(emprestimo, user, user.getEmail());
+        Cliente cliente = clienteService.findById(user.getEmail());
         mv.addObject("cliente", cliente);
         return mv;
 
@@ -107,7 +108,7 @@ public class TemplateController {
     public ModelAndView listarEmprestimos(@AuthenticationPrincipal Cliente user){
 
         ModelAndView mv = new ModelAndView("lista-emprestimos");
-        mv.addObject("emprestimos", emprestimoService.listarPorEmail(user.getEmail()));
+        mv.addObject("emprestimos", emprestimoService.listarPorEmail(user, user.getEmail()));
         return mv;
     }
 
@@ -115,7 +116,7 @@ public class TemplateController {
     public ModelAndView detalheEmprestmo(@AuthenticationPrincipal Cliente user, @PathVariable("codigo") String codigo){
         ModelAndView mv = new ModelAndView("detalhe-emprestimo");
         if(user.getEmail().equals(emprestimoService.findById(codigo).getEmailCliente())){
-            mv.addObject("emprestimos", emprestimoService.listarPorEmail(user.getEmail()));
+            mv.addObject("emprestimos", emprestimoService.listarPorEmail(user, user.getEmail()));
             mv.addObject("emprestimo", emprestimoService.findById(codigo));
         }
         return mv;

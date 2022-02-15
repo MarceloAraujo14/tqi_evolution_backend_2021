@@ -1,11 +1,15 @@
 package com.service;
 
+import com.cliente.dto.ClienteAtualDTO;
 import com.cliente.dto.ClienteReturnDTO;
 import com.cliente.model.Cliente;
+import com.cliente.model.Endereco;
 import com.cliente.model.UsuarioRole;
 import com.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,10 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -36,28 +37,42 @@ public class ClienteService implements UserDetailsService {
                 () -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 
+    public Cliente findById(String email) {
+            return clienteRepository.findById(email).get();
+    }
 
-    public ClienteReturnDTO findByEmail(String email) {
+    public ResponseEntity findById(Cliente user, String email) {
+        if(Objects.equals(user.getEmail(), email)){
+            return ResponseEntity.ok(mapper.map(clienteRepository.findById(email), ClienteReturnDTO.class).toString());}
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"Usuário não tem permissão para realizar essa requisição\"");}
+    }
 
-        return mapper.map(clienteRepository.findByEmail(email), ClienteReturnDTO.class);
+    public Endereco encontrarEndereco(String email){
+        return clienteRepository.findById(email).get().getEnderecos().get(0);
     }
 
 
+    public ResponseEntity update(ClienteAtualDTO clienteDTO, Cliente user, String email) {
 
-    public String update(Cliente clienteNovo, String email) {
-        Cliente clienteAntigo = clienteRepository.findByEmail(email);
-        if(clienteAntigo.isEnabled() && clienteAntigo.isAccountNonLocked()){
-            clienteNovo.setEmail(email);
-            clienteNovo.setUsuarioRole(UsuarioRole.CLIENTE);
-            clienteNovo.setEnable(true);
-            clienteNovo.setLocked(true);
-            clienteNovo.setSenha(passwordEncoder.encode(clienteNovo.getSenha()));
+            if(Objects.equals(user.getEmail(), email)) {
+                Cliente clienteNovo = mapper.map(clienteDTO, Cliente.class);
 
-            clienteRepository.save(clienteNovo);
-            return "{\"Dados atualizados com sucesso.\"}";
-        }else {
+                Cliente clienteAntigo = clienteRepository.findById(email).get();
+                if (clienteAntigo.isEnabled() && clienteAntigo.isAccountNonLocked()) {
+                    clienteNovo.setEmail(email);
+                    clienteNovo.setUsuarioRole(UsuarioRole.CLIENTE);
+                    clienteNovo.setEnable(true);
+                    clienteNovo.setLocked(true);
+                    clienteNovo.setSenha(passwordEncoder.encode(clienteNovo.getSenha()));
 
-        return "{\"Cliente não encontrado\"}";}
+                    clienteRepository.save(clienteNovo);
+                    return ResponseEntity.ok().body("{\"Dados atualizados com sucesso.\"}");
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"Cliente não encontrado\"}");
+                }
+            }
+            else return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"Usuário não tem permissão para realizar essa requisição\"");
     }
 
 

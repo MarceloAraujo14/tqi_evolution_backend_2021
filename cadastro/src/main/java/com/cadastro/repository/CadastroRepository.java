@@ -2,17 +2,16 @@ package com.cadastro.repository;
 
 import com.cadastro.model.Cliente;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Component
 @Repository
-@EnableElasticsearchRepositories
-@Transactional(readOnly = true)
-public interface CadastroRepository extends ElasticsearchRepository<Cliente, String> {
+public interface CadastroRepository extends JpaRepository<Cliente, String> {
+
     @NotNull Optional<Cliente> findById(@NotNull String email);
 
     Optional<Cliente> findByCpf(String cpf);

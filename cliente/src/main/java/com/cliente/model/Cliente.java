@@ -1,29 +1,38 @@
 package com.cliente.model;
 
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.util.ProxyUtils;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-@Data
-@Getter
-@Setter
+
+@Getter @Setter
 @ToString
 @NoArgsConstructor
-@TypeAlias("cliente")
-@Document(indexName = "clientes")
+@Entity
+@Table(name = "clientes")
 public class Cliente implements UserDetails {
+
 
     @Autowired
     private List<? extends GrantedAuthority> grantedAuthorities;
 
     @Id
+    @Column(name = "email", nullable = false)
     private String email;
 
     private String senha;
@@ -45,23 +54,17 @@ public class Cliente implements UserDetails {
     private Boolean enable = false;
 
 
-    public void setEnderecos(List<Endereco> endereco) {
-
-        this.enderecos = endereco;
-
-    }
-
     public Cliente(List<? extends GrantedAuthority> grantedAuthorities,
-                   String email,
-                   String senha,
-                   String nome,
-                   String cpf,
-                   String rg,
-                   Double renda,
-                   List<Endereco> enderecos,
-                   UsuarioRole usuarioRole,
-                   Boolean locked,
-                   Boolean enable) {
+            String email,
+            String senha,
+            String nome,
+            String cpf,
+            String rg,
+            Double renda,
+            List<Endereco> enderecos,
+            UsuarioRole usuarioRole,
+            Boolean locked,
+            Boolean enable) {
         this.grantedAuthorities = grantedAuthorities;
         this.email = email;
         this.senha = senha;
@@ -75,9 +78,19 @@ public class Cliente implements UserDetails {
         this.enable = enable;
     }
 
+    public void setEnderecos(List<Endereco> endereco) {
+
+        this.enderecos = endereco;
+
+    }
+
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return grantedAuthorities;
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(usuarioRole.name());
+        return Collections.singletonList(authority);
     }
 
     @Override
@@ -110,7 +123,17 @@ public class Cliente implements UserDetails {
         return enable;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || ProxyUtils.getUserClass(this) != ProxyUtils.getUserClass(o))
+            return false;
+        Cliente cliente = (Cliente) o;
+        return email != null && Objects.equals(email, cliente.email);
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
