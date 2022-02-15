@@ -1,9 +1,12 @@
 package com.emprestimo.model;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 
 @Data
@@ -12,12 +15,14 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @TypeAlias("emprestimo")
-@Document(indexName = "emprestimos")
+@Table(name = "emprestimos")
 public class Emprestimo {
 
     private String dataSolicitacao;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "emprestimo_sequence", sequenceName = "emprestimo_sequence", allocationSize = 1)
     private String codigo;
 
     private StatusEmprestimo statusEmprestimo;

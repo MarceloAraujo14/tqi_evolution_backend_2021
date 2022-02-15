@@ -23,7 +23,7 @@ import java.util.Objects;
 @Getter @Setter
 @ToString
 @NoArgsConstructor
-@Entity
+@Entity(name = "cliente")
 @Table(name = "clientes")
 public class Cliente implements UserDetails {
 

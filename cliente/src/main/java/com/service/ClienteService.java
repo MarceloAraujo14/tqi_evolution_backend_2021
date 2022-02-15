@@ -7,6 +7,7 @@ import com.cliente.model.Endereco;
 import com.cliente.model.UsuarioRole;
 import com.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.*;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClienteService implements UserDetailsService {
 
     private final ModelMapper mapper;
