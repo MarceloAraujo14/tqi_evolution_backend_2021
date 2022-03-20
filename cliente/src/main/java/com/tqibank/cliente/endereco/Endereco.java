@@ -21,34 +21,54 @@ public class Endereco {
     @Column(name = "endereco_id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private String logradouro;
 
 //    @NotBlank(message = "O campo não pode estar em branco.")
+    @Column(nullable = false)
     private String numero;
+
 
     private String complemento;
 
 //    @NotBlank(message = "O campo não pode estar em branco.")
 //    @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "Formato de CEP inválido.")
+    @Column(nullable = false)
     private String cep;
 
 //    @NotBlank(message = "O campo não pode estar em branco.")
+    @Column(nullable = false)
     private String bairro;
 
 //    @NotBlank(message = "O campo não pode estar em branco.")
+    @Column(nullable = false)
     private String cidade;
 
 //    @NotBlank(message = "O campo não pode estar em branco.")
+    @Column(nullable = false)
     private String estado;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private tipoEndereco tipo;
 
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_email", referencedColumnName = "email")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_email", referencedColumnName = "email",nullable = false)
     private Cliente cliente;
 
+    public Endereco(String logradouro, String numero, String complemento, String cep, String bairro, String cidade,
+                    String estado, tipoEndereco tipo, Cliente cliente) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cep = cep;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.tipo = tipo;
+        this.cliente = cliente;
+    }
 
     @Override
     public String toString() {

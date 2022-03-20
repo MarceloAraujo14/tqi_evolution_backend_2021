@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,18 +22,23 @@ public class Cliente {
     @Column(unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String senha;
 
+    @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
     private String cpf;
 
+    @Column(nullable = false)
     private String rg;
 
+    @Column(nullable = false)
     private Double renda;
 
-    @OneToMany(mappedBy = "cliente", targetEntity = Endereco.class, cascade = CascadeType.ALL)
-    private List<Endereco> enderecos;
+    @OneToMany(mappedBy = "cliente", targetEntity = Endereco.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Endereco> enderecos = new ArrayList<>(3);
 
 
     @Override
