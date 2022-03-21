@@ -1,28 +1,61 @@
 package com.tqibank.cliente;
 
+import com.tqibank.exceptions.DuplicatedEmailException;
+import javassist.bytecode.DuplicateMemberException;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+@Slf4j
 @Service
-public record ClienteService(ClienteRepository repository) {
+public class ClienteService {
 
-    public void cadastrarCliente(ClienteCadastro clienteCadastro) {
+    private final ClienteRepository repository;
 
-        Cliente cliente = Cliente.builder()
-                .email(clienteCadastro.email())
-                .nome(clienteCadastro.nome())
-                .cpf(clienteCadastro.cpf())
-                .rg(clienteCadastro.rg())
-                .senha(clienteCadastro.senha())
-                .renda(clienteCadastro.renda())
-                .enderecos(clienteCadastro.enderecos())
-                .build();
+    @Autowired
+    public ClienteService(ClienteRepository repository) {
+        this.repository = repository;
+    }
 
-        clienteCadastro.enderecos().get(0).setCliente(cliente);
-
-        cliente.setEnderecos(clienteCadastro.enderecos());
-
+    public ResponseEntity<String> cadastrarCliente(Cliente cliente) {
+        try{
+            if(clienteExiste(cliente)){
+                throw new DuplicatedEmailException(String.format("Email %s já cadastrado.", cliente.getEmail()));
+            }
         repository.save(cliente);
+        return ResponseEntity.ok().body("{\"Cliente cadastrado com sucesso.\"}");
+        }
+        catch (HttpClientErrorException.BadRequest e){
+            return ResponseEntity.badRequest().body("{\"Não foi possível realizar a operação de cadastro.\"}");
+        } catch (DuplicatedEmailException e) {
+            return ResponseEntity.badRequest().body(String.format("Email %s já cadastrado.", cliente.getEmail()));
+        }
+    }
 
-        //todo: validar os campos
+    public Optional<Cliente> encontrarClientePorEmail(String email) {
+        return repository.findById(email);
+    }
+
+    public ResponseEntity<Map<String, String>> handleException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    public boolean clienteExiste(Cliente cliente){
+        return repository.findById(cliente.getEmail()).isPresent();
     }
 }

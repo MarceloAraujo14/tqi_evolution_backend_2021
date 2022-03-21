@@ -5,21 +5,22 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity(name = "clientes")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Cliente {
 
     @Id
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
@@ -35,9 +36,10 @@ public class Cliente {
     private String rg;
 
     @Column(nullable = false)
-    private Double renda;
+    private BigDecimal renda;
 
     @OneToMany(mappedBy = "cliente", targetEntity = Endereco.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Endereco> enderecos = new ArrayList<>(3);
 
 

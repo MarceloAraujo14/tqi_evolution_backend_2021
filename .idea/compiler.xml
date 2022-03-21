@@ -10,5 +10,8 @@
         <module name="cliente" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="utils" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

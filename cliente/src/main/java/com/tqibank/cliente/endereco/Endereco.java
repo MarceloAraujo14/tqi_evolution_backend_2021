@@ -2,14 +2,16 @@ package com.tqibank.cliente.endereco;
 
 import com.tqibank.cliente.Cliente;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "enderecos")
@@ -21,33 +23,33 @@ public class Endereco {
     @Column(name = "endereco_id", nullable = false)
     private Long id;
 
+    @NotBlank(message = "O campo não pode estar em branco.")
     @Column(nullable = false)
     private String logradouro;
 
-//    @NotBlank(message = "O campo não pode estar em branco.")
     @Column(nullable = false)
     private String numero;
 
-
     private String complemento;
 
-//    @NotBlank(message = "O campo não pode estar em branco.")
-//    @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "Formato de CEP inválido.")
+    @NotBlank(message = "O campo não pode estar em branco.")
+    @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "Formato de CEP inválido.")
     @Column(nullable = false)
     private String cep;
 
-//    @NotBlank(message = "O campo não pode estar em branco.")
+    @NotBlank(message = "O campo não pode estar em branco.")
     @Column(nullable = false)
     private String bairro;
 
-//    @NotBlank(message = "O campo não pode estar em branco.")
+    @NotBlank(message = "O campo não pode estar em branco.")
     @Column(nullable = false)
     private String cidade;
 
-//    @NotBlank(message = "O campo não pode estar em branco.")
+    @NotBlank(message = "O campo não pode estar em branco.")
     @Column(nullable = false)
     private String estado;
 
+    @NotBlank(message = "O campo não pode estar em branco.")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private tipoEndereco tipo;
@@ -55,7 +57,22 @@ public class Endereco {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_email", referencedColumnName = "email",nullable = false)
+    @ToString.Exclude
     private Cliente cliente;
+
+
+
+    public Endereco(String logradouro, String numero, String complemento, String cep, String bairro, String cidade,
+                    String estado, tipoEndereco tipo) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cep = cep;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.tipo = tipo;
+    }
 
     public Endereco(String logradouro, String numero, String complemento, String cep, String bairro, String cidade,
                     String estado, tipoEndereco tipo, Cliente cliente) {
@@ -69,6 +86,8 @@ public class Endereco {
         this.tipo = tipo;
         this.cliente = cliente;
     }
+
+
 
     @Override
     public String toString() {
@@ -88,13 +107,13 @@ public class Endereco {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Endereco endereco = (Endereco) o;
-        return Objects.equals(numero, endereco.numero) && Objects.equals(complemento, endereco.complemento) && Objects.equals(cep, endereco.cep);
+        return id != null && Objects.equals(id, endereco.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numero, complemento, cep);
+        return getClass().hashCode();
     }
 }
