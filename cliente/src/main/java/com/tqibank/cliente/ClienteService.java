@@ -1,8 +1,6 @@
 package com.tqibank.cliente;
 
 import com.tqibank.exceptions.DuplicatedEmailException;
-import javassist.bytecode.DuplicateMemberException;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +26,7 @@ public class ClienteService {
 
     public ResponseEntity<String> cadastrarCliente(Cliente cliente) {
         try{
-            if(clienteExiste(cliente)){
+            if(EmailJaCadastrado(cliente)){
                 throw new DuplicatedEmailException(String.format("Email %s já cadastrado.", cliente.getEmail()));
             }
         repository.save(cliente);
@@ -55,7 +53,7 @@ public class ClienteService {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    public boolean clienteExiste(Cliente cliente){
+    public boolean EmailJaCadastrado(Cliente cliente){
         return repository.findById(cliente.getEmail()).isPresent();
     }
 }

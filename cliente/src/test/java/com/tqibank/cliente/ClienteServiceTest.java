@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -76,7 +75,6 @@ class ClienteServiceTest {
         assertThat(result).isEqualTo(expected);
         verify(repository,times(1)).save(cliente);
 
-
     }
 
     @Test
@@ -85,19 +83,20 @@ class ClienteServiceTest {
         //given
         Cliente clienteAntigo = getCliente();
         Cliente clienteNovo = getCliente();
+        String email = "jhon.doe@gmail.com";
 
         //when
-        lenient().when(repository.findById(clienteNovo.getEmail())).thenReturn(Optional.of(clienteAntigo));
-        clienteService.cadastrarCliente(clienteNovo);
+        when(repository.findById(email)).thenReturn(Optional.of(clienteAntigo));
+        ResponseEntity<String> expected = ResponseEntity.badRequest().body(String.format("Email %s já cadastrado.", email));
+        ResponseEntity<String> result = clienteService.cadastrarCliente(clienteNovo);
         //then
-        assertThatThrownBy(() -> clienteService.cadastrarCliente(clienteNovo))
-                .hasMessageContaining(String.format("Email %s já está cadastrado.",clienteNovo.getEmail()))
-                .isInstanceOf(DuplicatedEmailException.class);
 
-        verify(repository, times(1)).findById(clienteNovo.getEmail());
+        assertThat(result).isEqualTo(expected);
+        verify(repository, times(1)).findById(email);
+        verify(repository,times(0)).save(clienteNovo);
 
     }
-    //todo: testar esse metodo
+
 
     public Cliente getCliente(){
         Cliente cliente = new Cliente();
