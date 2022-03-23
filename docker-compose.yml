@@ -1,119 +1,31 @@
+version: '3'
+
 services:
-  postgres:
-    container_name: postgres
+  teste-postgres-compose:
     image: postgres
     environment:
-      POSTGRES_USER: tqibank
-      POSTGRES_PASSWORD: password
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
-    ports:
-      - "5432:5432"
-    networks:
-      - postgres
-    restart: unless-stopped
+      POSTGRES_PASSWORD: "123456"
 
-  pgadmin:
-    container_name: pgadmin
+    ports:
+      - "15432:5432"
+    volumes:
+      - /home/usertqi/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data
+    networks:
+      - postgres-compose-network
+
+
+  teste-pgadmin-compose:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin:/var/lib/pgadmin
+      PGADMIN_DEFAULT_EMAIL: "mbaraujo1406@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
     ports:
-      - "5050:80"
+      - "16543:80"
+    depends_on:
+      - teste-postgres-compose
     networks:
-      - postgres
-    restart: unless-stopped
-#  zipkin:
-#    image: openzipkin/zipkin
-#    container_name: zipkin
-#    ports:
-#      - "9411:9411"
-#    networks:
-#      - spring
-#  rabbitmq:
-#    image: rabbitmq:3.9.11-management-alpine
-#    container_name: rabbitmq
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#    networks:
-#      - spring
-#  #  eureka-server:
-#  #    image: tqibank/eureka-server:latest
-#  #    container_name: eureka-server
-#  #    ports:
-#  #      - "8761:8761"
-#  #    environment:
-#  #      - SPRING_PROFILES_ACTIVE=docker
-#  #    networks:
-#  #      - spring
-#  #    depends_on:
-#  #      - zipkin
-#  #  apigw:
-#  #    image: tqibank/apigw:latest
-#  #    container_name: apigw
-#  #    ports:
-#  #      - "8083:8083"
-#  #    environment:
-#  #      - SPRING_PROFILES_ACTIVE=docker
-#  #    networks:
-#  #      - spring
-#  #    depends_on:
-#  #      - zipkin
-#  #      - eureka-server
-#  customer:
-#    image: tqibank/customer:latest
-#    container_name: customer
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#      - postgres
-#    depends_on:
-#      - zipkin
-#      - postgres
-#      - rabbitmq
-#  fraud:
-#    image: tqibank/fraud:latest
-#    container_name: fraud
-#    ports:
-#      - "8081:8081"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#      - postgres
-#    depends_on:
-#      - zipkin
-#      - postgres
-#      - rabbitmq
-#  notification:
-#    image: amigoscode/notification:latest
-#    container_name: notification
-#    ports:
-#      - "8082:8082"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#      - postgres
-#    depends_on:
-#      - zipkin
-#      - postgres
-#      - rabbitmq
-networks:
-  postgres:
-    driver: bridge
-  spring:
-    driver: bridge
+      - postgres-compose-network
 
-volumes:
-  postgres:
-  pgadmin:
+networks:
+  postgres-compose-network:
+    driver: bridge

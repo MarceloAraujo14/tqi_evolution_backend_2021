@@ -8,7 +8,7 @@ spring:
   datasource:
     username: 'financeira'
     password: '123456'
-    url: jdbc:postgresql://localhost:5432/clientes
+    url: jdbc:postgresql://localhost:15432/clientes
 
   jpa:
     properties:
@@ -18,5 +18,5 @@ spring:
 
 
     hibernate:
-      ddl-auto: 'create-drop'
+      ddl-auto: 'update'
     show_sql: 'true'

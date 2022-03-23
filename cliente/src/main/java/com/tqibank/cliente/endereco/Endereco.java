@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
@@ -49,7 +50,7 @@ public class Endereco {
     @Column(nullable = false)
     private String estado;
 
-    @NotBlank(message = "O campo não pode estar em branco.")
+    @NotNull(message = "O campo não pode estar em branco.")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private tipoEndereco tipo;

@@ -1,6 +1,4 @@
 
-B
-docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a
 t
 Dcliente/src/main/java/com/tqibank/cliente/endereco/tipoEndereco.java,3\c\3c32670e99509c8d64ac4a6770af31ae959133d1
 7
@@ -13,8 +11,6 @@ p
 @cliente/src/main/java/com/tqibank/cliente/ClienteRepository.java,3\3\331b927a482675336c11ae404170c27d97e04412
 t
 Dcliente/src/test/java/com/tqibank/cliente/ClienteRepositoryTest.java,b\a\ba9174b71d38de4ac7ba23e5def91a98247491a6
-m
-=cliente/src/main/java/com/tqibank/cliente/ClienteRequest.java,6\8\680c0ad662800bc460d4d551f124896ad053d2e0
 {
 Kcliente/src/main/java/com/tqibank/validation/constraints/DuplicatedCPF.java,d\8\d862253fbeac53d8fa46461283942f5a8626c6d3
 y
@@ -29,8 +25,6 @@ z
 Jcliente/src/main/java/com/tqibank/validation/constraints/DuplicatedRG.java,f\3\f36c909a79eec4748b498c278f617718260aa79c
 x
 Hcliente/src/main/java/com/tqibank/validation/DuplicatedRGValidation.java,9\3\9348c1115e73f2210acb1b80db4154526fcb6c58
-p
-@cliente/src/main/java/com/tqibank/cliente/endereco/Endereco.java,f\a\fa0e5b280e527eb3c72a20147f35e323a05c2739
 o
 ?cliente/src/main/java/com/tqibank/config/ModelMapperConfig.java,e\f\ef426e0b4935d01eef10b4ec4fc3da8ef0e600db
 r
