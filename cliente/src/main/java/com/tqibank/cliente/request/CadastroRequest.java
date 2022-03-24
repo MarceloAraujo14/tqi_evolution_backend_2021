@@ -1,8 +1,9 @@
-package com.tqibank.cliente;
+package com.tqibank.cliente.request;
 
 import com.tqibank.cliente.endereco.Endereco;
 import com.tqibank.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -19,7 +20,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ClienteRequest {
+@Builder
+public class CadastroRequest {
 
     @NotBlank(message = "O campo não pode estar em branco.")
     @Email(message = "Email inválido.")
@@ -50,24 +52,6 @@ public class ClienteRequest {
 
     @Valid
     private List<Endereco> enderecos = new ArrayList<>(3);
-
-    public Cliente clienteCadastroToCliente(ClienteRequest clienteRequest){
-        Cliente cliente = Cliente.builder()
-                .email(clienteRequest.getEmail())
-                .nome(clienteRequest.getNome())
-                .cpf(clienteRequest.getCpf())
-                .rg(clienteRequest.getRg())
-                .senha(clienteRequest.getSenha())
-                .renda(clienteRequest.getRenda())
-                .enderecos(clienteRequest.getEnderecos())
-                .build();
-
-        cliente.getEnderecos().get(0).setCliente(cliente);
-
-        return cliente;
-    }
-
-
 
 
     @Override

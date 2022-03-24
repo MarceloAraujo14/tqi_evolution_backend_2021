@@ -1,5 +1,6 @@
 package com.tqibank.cliente.endereco;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tqibank.cliente.Cliente;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -55,7 +56,7 @@ public class Endereco {
     @Enumerated(EnumType.STRING)
     private tipoEndereco tipo;
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_email", referencedColumnName = "email",nullable = false)
     @ToString.Exclude

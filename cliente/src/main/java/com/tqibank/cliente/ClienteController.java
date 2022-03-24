@@ -1,7 +1,11 @@
 package com.tqibank.cliente;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+//
+//import io.swagger.annotations.Api;
+//import io.swagger.annotations.ApiOperation;
+import com.tqibank.cliente.request.AtualizacaoRequest;
+import com.tqibank.cliente.request.CadastroRequest;
+import com.tqibank.mapper.Mapper;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,13 +14,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/clientes/")
-@Api(value = "TQI API REST")
-@CrossOrigin("*")
+@RequestMapping("/api/v1")
 public class ClienteController {
 
    private final ClienteService clienteService;
@@ -25,12 +28,47 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @ApiOperation(value = "Cadastro de clientes")
-    @PostMapping(value = "/cadastro", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> cadastrarCliente(@RequestBody @Valid ClienteRequest cliente){
-        log.info("novo cadastro de cliente {}", cliente);
+    @Operation(summary = "Retorna a lista de todos os clientes cadastrados.")
+    @GetMapping(value = "/clientes")
+    public ResponseEntity<List<Cliente>> listarClientes(){
+        return clienteService.listarClientes();
+    }
 
-        return clienteService.cadastrarCliente(cliente.clienteCadastroToCliente(cliente));
+    @Operation(summary = "Cadastra um cliente. ")
+    @PostMapping(value = "/cliente/cadastro", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> cadastrarCliente(@RequestBody @Valid CadastroRequest request){
+
+        log.info("novo cadastro de cliente {}", request);
+
+        return clienteService.cadastrarCliente(Mapper.requestToCliente(request));
+    }
+
+    @Operation(summary = "Retorna um cliente pelo email. ")
+    @GetMapping(value = "/cliente/{email}")
+    public ResponseEntity<String> retornarClientePorEmail(@PathVariable(value = "email") String email){
+
+        return clienteService.encontrarClientePorEmail(email);
+    }
+
+    @Operation(summary = "Retorna um cliente pelo cpf. ")
+    @GetMapping(value = "/cliente/{cpf}")
+    public ResponseEntity<String> retornarClientePorCPF(@PathVariable(value = "cpf") String cpf){
+
+        return clienteService.encontrarClientePorCpf(cpf);
+    }
+
+    @Operation(summary = "Retorna um cliente pelo rg. ")
+    @GetMapping(value = "/cliente/{rg}")
+    public ResponseEntity<String> retornarClientePorRg(@PathVariable(value = "rg") String rg){
+
+        return clienteService.encontrarClientePorRg(rg);
+    }
+
+    @Operation(summary = "Atualiza os dados de um cliente. ")
+    @PostMapping(value = "/cliente/{email}")
+    public ResponseEntity<String> atualizarCliente(@Valid @RequestBody AtualizacaoRequest request, @PathVariable(value = "email") String email){
+
+        return clienteService.atualizarCliente(request, email);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

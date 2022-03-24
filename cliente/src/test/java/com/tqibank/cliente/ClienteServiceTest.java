@@ -12,6 +12,7 @@ package com.tqibank.cliente;
 
 import com.tqibank.cliente.endereco.Endereco;
 import com.tqibank.cliente.endereco.tipoEndereco;
+import com.tqibank.cliente.request.AtualizacaoRequest;
 import com.tqibank.exceptions.DuplicatedEmailException;
 import jdk.jfr.Name;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,23 @@ class ClienteServiceTest {
     @InjectMocks
     private ClienteService clienteService;
 
+    public Cliente getCliente(){
+        Cliente cliente = new Cliente();
+        cliente.setNome("Jhon Doe");
+        cliente.setEmail("jhon.doe@gmail.com");
+        cliente.setSenha("Abc/12345678@");
+        cliente.setCpf("35096343065");
+        cliente.setRg("403829264");
+        cliente.setRenda(new BigDecimal("5.000"));
+        cliente.setEnderecos(
+                List.of( new Endereco("Rua A", "52A", "", "57237970", "Teste",
+                        "Teste", "Teste", tipoEndereco.RESIDENCIAL)));
+
+        cliente.setEnderecos(List.of(new Endereco("Rua A", "52A", "", "57237970", "Teste",
+                "Teste", "Teste", tipoEndereco.RESIDENCIAL,cliente)));
+
+        return cliente;
+    }
 
     @Test
     @Name("Deveria Salvar Um Cliente")
@@ -87,13 +105,13 @@ class ClienteServiceTest {
         String email = "jhon.doe@gmail.com";
 
         //when
-        when(repository.findById(email)).thenReturn(Optional.of(clienteAntigo));
-        ResponseEntity<String> expected = ResponseEntity.badRequest().body(String.format("Email %s já cadastrado.", email));
+        when(repository.existsById(email)).thenReturn(true);
+        ResponseEntity<String> expected = ResponseEntity.badRequest().body(String.format("{\"Email %s já cadastrado.\"}", email));
         ResponseEntity<String> result = clienteService.cadastrarCliente(clienteNovo);
         //then
 
         assertThat(result).isEqualTo(expected);
-        verify(repository, times(1)).findById(email);
+        verify(repository, times(1)).existsById(email);
         verify(repository,times(0)).save(clienteNovo);
 
     }
@@ -107,10 +125,12 @@ class ClienteServiceTest {
         Cliente cliente = getCliente();
         //when
         when(repository.findById(email)).thenReturn(Optional.of(cliente));
+        when(repository.existsById(email)).thenReturn(true);
 
         //then
         assertThat(clienteService.encontrarClientePorEmail(email)).isNotNull();
-        verify(repository,times(2)).findById(email);
+        verify(repository,times(1)).findById(email);
+        verify(repository,times(1)).existsById(email);
     }
 
     @Test
@@ -120,7 +140,7 @@ class ClienteServiceTest {
         String email = "jhon.doe@gmail.com";
         Cliente cliente = getCliente();
         //when
-        when(repository.findById(email)).thenReturn(Optional.empty());
+        when(repository.existsById(email)).thenReturn(false);
 
         ResponseEntity<String> result = clienteService.encontrarClientePorEmail(email);
         ResponseEntity<String> expected = ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -128,24 +148,94 @@ class ClienteServiceTest {
         
         //then
         assertThat(result).isEqualTo(expected);
-        verify(repository,times(1)).findById(email);
+        verify(repository,times(1)).existsById(email);
     }
 
-    public Cliente getCliente(){
-        Cliente cliente = new Cliente();
-        cliente.setNome("Jhon Doe");
-        cliente.setEmail("jhon.doe@gmail.com");
-        cliente.setSenha("Abc/12345678@");
-        cliente.setCpf("35096343065");
-        cliente.setRg("403829264");
-        cliente.setRenda(new BigDecimal("5.000"));
-        cliente.setEnderecos(
-                List.of( new Endereco("Rua A", "52A", "", "57237970", "Teste",
-                        "Teste", "Teste", tipoEndereco.RESIDENCIAL)));
 
-        cliente.setEnderecos(List.of(new Endereco("Rua A", "52A", "", "57237970", "Teste",
-                "Teste", "Teste", tipoEndereco.RESIDENCIAL,cliente)));
+    @Test
+    void encontrarClientePorCpf() {
+        //given
+        String cpf = "35096343065";
+        Cliente cliente = getCliente();
+        //when
+        when(repository.findByCpf(cpf)).thenReturn(Optional.of(cliente));
+        when(repository.existsByCpf(cpf)).thenReturn(true);
 
-        return cliente;
+        //then
+        assertThat(clienteService.encontrarClientePorCpf(cpf)).isNotNull();
+        verify(repository,times(1)).findByCpf(cpf);
+        verify(repository,times(1)).existsByCpf(cpf);
+    }
+
+    @Test
+    void encontrarClientePorRg() {
+        //given
+        String rg = "403829264";
+        Cliente cliente = getCliente();
+        //when
+        when(repository.findByRg(rg)).thenReturn(Optional.of(cliente));
+        when(repository.existsByRg(rg)).thenReturn(true);
+
+        //then
+        assertThat(clienteService.encontrarClientePorRg(rg)).isNotNull();
+        verify(repository,times(1)).findByRg(rg);
+        verify(repository,times(1)).existsByRg(rg);
+
+    }
+
+    @Test
+    void atualizarCliente() {
+
+        //given
+
+        String email = "jhon.doe@gmail.com";
+
+        AtualizacaoRequest clienteNovo = AtualizacaoRequest.builder()
+                .nome("Jhon Doe")
+                .senha("Abc/12345678@")
+                .renda(new BigDecimal("5.000"))
+                .enderecos(List.of(
+                        new Endereco(
+                                "Rua A",
+                                "52A",
+                                "",
+                                "57237970",
+                                "Teste",
+                                "Teste",
+                                "Teste",
+                                tipoEndereco.RESIDENCIAL)))
+                .build();
+
+        Cliente clienteAntigo = getCliente();
+
+        //when
+        when(repository.existsById(email)).thenReturn(true);
+        when(repository.findById(email)).thenReturn(Optional.of(clienteAntigo));
+
+        ResponseEntity<String> expected = ResponseEntity.accepted().body("{\"Cadastro atualizado com sucesso.\"}");
+        ResponseEntity<String> result = clienteService.atualizarCliente(clienteNovo, email);
+
+        //then
+        assertThat(result).isEqualTo(expected);
+        verify(repository,times(1)).existsById(email);
+        verify(repository,times(1)).save(clienteAntigo);
+
+    }
+
+    @Test
+    void listarClientes() {
+
+        Cliente cliente1 = getCliente();
+        Cliente cliente2 = getCliente();
+        cliente1.setEmail("janny.doe@gmail.com");
+
+        when(repository.findAll()).thenReturn(List.of(cliente1, cliente2));
+
+        ResponseEntity<List<Cliente>> expected = ResponseEntity.ok().body(List.of(cliente1, cliente2));
+        ResponseEntity<List<Cliente>> result = clienteService.listarClientes();
+
+        assertThat(result).isEqualTo(expected);
+        verify(repository, times(1)).findAll();
+
     }
 }
