@@ -13,7 +13,6 @@ services:
     networks:
       - postgres-compose-network
 
-
   teste-pgadmin-compose:
     image: dpage/pgadmin4
     environment:

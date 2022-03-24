@@ -1,12 +1,8 @@
 
 t
 Dcliente/src/main/java/com/tqibank/cliente/endereco/tipoEndereco.java,3\c\3c32670e99509c8d64ac4a6770af31ae959133d1
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 f
 6cliente/src/main/java/com/tqibank/cliente/Cliente.java,c\2\c24cd3919a4d73aa46eea6d58640bf2e2695a4f9
-i
-9cliente/src/main/java/com/tqibank/ClienteApplication.java,a\f\af8a41f24fceeb7200fb3b1086b6fe85bd342160
 p
 @cliente/src/main/java/com/tqibank/cliente/ClienteRepository.java,3\3\331b927a482675336c11ae404170c27d97e04412
 t
@@ -31,8 +27,6 @@ r
 Bcliente/src/main/java/com/tqibank/validation/constraints/Nome.java,3\9\39b45461fa4258937156f9387962b2d9871424dd
 p
 @cliente/src/main/java/com/tqibank/validation/NomeValidation.java,6\2\6281bf3810a76e0cdcb109bb16d1ecfa1de16172
-?
-cliente/pom.xml,3\9\39b7bb94550bae4f8daf8f661fec48c5523f693b
 p
 @cliente/src/main/java/com/tqibank/validation/constraints/RG.java,7\0\70fafb215bf0169534f41af8a4502f0bb161157f
 n
@@ -41,3 +35,11 @@ s
 Ccliente/src/main/java/com/tqibank/validation/constraints/Senha.java,5\a\5a34ad3ee447ca46064bc7f9f83cdc0efe7f37d4
 q
 Acliente/src/main/java/com/tqibank/validation/SenhaValidation.java,8\f\8f3f4146fead7d208ff5c435f0e5462dc2713961
+p
+@cliente/src/main/java/com/tqibank/cliente/endereco/Endereco.java,f/a/fa0e5b280e527eb3c72a20147f35e323a05c2739
+m
+=cliente/src/main/java/com/tqibank/cliente/ClienteRequest.java,6/8/680c0ad662800bc460d4d551f124896ad053d2e0
+?
+cliente/pom.xml,3/9/39b7bb94550bae4f8daf8f661fec48c5523f693b
+i
+9cliente/src/main/java/com/tqibank/ClienteApplication.java,a/f/af8a41f24fceeb7200fb3b1086b6fe85bd342160

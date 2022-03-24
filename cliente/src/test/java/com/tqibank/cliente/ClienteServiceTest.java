@@ -19,6 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.client.HttpClientErrorException;
@@ -98,6 +99,38 @@ class ClienteServiceTest {
     }
 
 
+    @Test
+    @Name("Deveria retornar um cliente cadastrado pelo email")
+    void encontrarClientePorEmail() {
+        //given
+        String email = "jhon.doe@gmail.com";
+        Cliente cliente = getCliente();
+        //when
+        when(repository.findById(email)).thenReturn(Optional.of(cliente));
+
+        //then
+        assertThat(clienteService.encontrarClientePorEmail(email)).isNotNull();
+        verify(repository,times(2)).findById(email);
+    }
+
+    @Test
+    @Name("Deveria retornar mensagem de cliente não encontrado ao buscar um email não existente")
+    void encontrarClientePorEmail2() {
+        //given
+        String email = "jhon.doe@gmail.com";
+        Cliente cliente = getCliente();
+        //when
+        when(repository.findById(email)).thenReturn(Optional.empty());
+
+        ResponseEntity<String> result = clienteService.encontrarClientePorEmail(email);
+        ResponseEntity<String> expected = ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("{\"Cliente com o email" + email + " não cadastrado.\"}");
+        
+        //then
+        assertThat(result).isEqualTo(expected);
+        verify(repository,times(1)).findById(email);
+    }
+
     public Cliente getCliente(){
         Cliente cliente = new Cliente();
         cliente.setNome("Jhon Doe");
@@ -115,5 +148,4 @@ class ClienteServiceTest {
 
         return cliente;
     }
-
 }

@@ -3,6 +3,7 @@ package com.tqibank.cliente;
 import com.tqibank.exceptions.DuplicatedEmailException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
@@ -39,8 +40,14 @@ public class ClienteService {
         }
     }
 
-    public Optional<Cliente> encontrarClientePorEmail(String email) {
-        return repository.findById(email);
+    public ResponseEntity<String> encontrarClientePorEmail(String email) {
+        if(repository.findById(email).isPresent()){
+            return ResponseEntity.ok().body(repository.findById(email).toString());
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"Cliente com o email" + email + " não cadastrado.\"}");
+        }
     }
 
     public ResponseEntity<Map<String, String>> handleException(MethodArgumentNotValidException ex) {
