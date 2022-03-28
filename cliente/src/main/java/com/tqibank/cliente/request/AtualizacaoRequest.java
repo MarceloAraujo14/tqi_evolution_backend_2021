@@ -37,4 +37,12 @@ public class AtualizacaoRequest {
     @Valid
     private List<Endereco> enderecos = new ArrayList<>(3);
 
+    @Override
+    public String toString() {
+        return "AtualizacaoRequest{" +
+                "nome='" + nome + '\'' +
+                ", renda=" + renda +
+                ", enderecos=" + enderecos +
+                '}';
+    }
 }

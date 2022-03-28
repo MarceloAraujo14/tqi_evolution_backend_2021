@@ -7,8 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="config-server" />
         <module name="cliente" />
+        <module name="config-server" />
         <module name="userapp" />
         <module name="gateway" />
         <module name="service-discovery" />
@@ -16,7 +16,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="cadastro" target="17" />
-      <module name="config-server" target="17" />
       <module name="emprestimo" target="17" />
       <module name="gateway" target="17" />
       <module name="login" target="17" />
@@ -27,7 +26,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cadastro" options="-parameters" />
-      <module name="cliente" options="" />
+      <module name="cliente" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="emprestimo" options="-parameters" />
       <module name="gateway" options="-parameters" />

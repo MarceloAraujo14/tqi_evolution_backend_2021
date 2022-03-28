@@ -58,7 +58,6 @@ public class CadastroRequest {
     public String toString() {
         return "Cliente{" +
                 "email: '" + email + '\'' +
-                ", senha: '" + senha + '\'' +
                 ", nome: '" + nome + '\'' +
                 ", cpf: '" + cpf + '\'' +
                 ", rg: '" + rg + '\'' +

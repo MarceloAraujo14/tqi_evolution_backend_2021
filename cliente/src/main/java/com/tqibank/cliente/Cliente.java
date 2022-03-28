@@ -55,4 +55,16 @@ public class Cliente {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "email='" + email + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", rg='" + rg + '\'' +
+                ", renda=" + renda +
+                ", enderecos=" + enderecos +
+                '}';
+    }
 }

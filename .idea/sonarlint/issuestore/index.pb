@@ -17,8 +17,6 @@ z
 Jcliente/src/main/java/com/tqibank/validation/constraints/DuplicatedRG.java,f\3\f36c909a79eec4748b498c278f617718260aa79c
 x
 Hcliente/src/main/java/com/tqibank/validation/DuplicatedRGValidation.java,9\3\9348c1115e73f2210acb1b80db4154526fcb6c58
-o
-?cliente/src/main/java/com/tqibank/config/ModelMapperConfig.java,e\f\ef426e0b4935d01eef10b4ec4fc3da8ef0e600db
 r
 Bcliente/src/main/java/com/tqibank/validation/constraints/Nome.java,3\9\39b45461fa4258937156f9387962b2d9871424dd
 p
@@ -31,3 +29,11 @@ s
 Ccliente/src/main/java/com/tqibank/validation/constraints/Senha.java,5\a\5a34ad3ee447ca46064bc7f9f83cdc0efe7f37d4
 q
 Acliente/src/main/java/com/tqibank/validation/SenhaValidation.java,8\f\8f3f4146fead7d208ff5c435f0e5462dc2713961
+o
+?cliente/src/main/java/com/tqibank/config/BaseSwaggerConfig.java,8/3/8389696b0846f32c1ab2d69c96248f0ef368611d
+p
+@cliente/src/main/java/com/tqibank/cliente/endereco/Endereco.java,f/a/fa0e5b280e527eb3c72a20147f35e323a05c2739
+k
+;cliente/src/main/java/com/tqibank/config/SwaggerConfig.java,1/d/1dcdb1eb71945811644328dab749548e8330fadc
+p
+@cliente/src/main/java/com/tqibank/cliente/ClienteRepository.java,3/3/331b927a482675336c11ae404170c27d97e04412

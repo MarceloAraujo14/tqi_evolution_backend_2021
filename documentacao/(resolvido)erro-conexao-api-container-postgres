@@ -1,0 +1,9 @@
+Erro:
+Container da aplicação não conecta ao database postgres rodando em outro container.
+
+Possiveis causas:
+- Erro na configuração do application.yml da api
+
+Tentativas:
+- Conectar o container da aplicação na network em que esta conectado o banco de dados
+- Alterar a configuração do application.yml de localhost para o nome do container designado no arquivo docker-compose (resolvido)

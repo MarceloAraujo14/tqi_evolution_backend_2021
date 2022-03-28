@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/MarceloAraujo14/tqibank-config-files.git

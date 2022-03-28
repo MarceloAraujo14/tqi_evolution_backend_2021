@@ -1,6 +1,7 @@
 package com.tqibank.cliente;
 
 import com.tqibank.cliente.request.AtualizacaoRequest;
+import com.tqibank.cliente.request.RetornoRequest;
 import com.tqibank.exceptions.DuplicatedEmailException;
 import com.tqibank.mapper.Mapper;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,10 @@ public class ClienteService {
         this.repository = repository;
     }
 
-    public ResponseEntity<List<Cliente>> listarClientes() {
-        return ResponseEntity.ok().body(repository.findAll());
-    }
+//    public ResponseEntity<List<RetornoRequest>> listarClientes() {
+//        List<RetornoRequest> clientes = repository.findAll();
+//        return ResponseEntity.ok().body(repository.findAll());
+//    }
 
     public ResponseEntity<String> cadastrarCliente(Cliente cliente) {
         try{
@@ -55,7 +57,7 @@ public class ClienteService {
 
     public ResponseEntity<String> encontrarClientePorEmail(String email) {
         if(repository.existsById(email)){
-            return ResponseEntity.ok().body(repository.findById(email).toString());
+            return ResponseEntity.ok().body(repository.findById(email).get().toString());
         }
         else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -65,7 +67,7 @@ public class ClienteService {
 
     public ResponseEntity<String> encontrarClientePorCpf(String cpf) {
         if(repository.existsByCpf(cpf)){
-            return ResponseEntity.ok().body(repository.findByCpf(cpf).toString());
+            return ResponseEntity.ok().body(repository.findByCpf(cpf).get().toString());
         }
         else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -75,7 +77,7 @@ public class ClienteService {
 
     public ResponseEntity<String> encontrarClientePorRg(String rg) {
         if(repository.existsByRg(rg)){
-            return ResponseEntity.ok().body(repository.findByRg(rg).toString());
+            return ResponseEntity.ok().body(repository.findByRg(rg).get().toString());
         }
         else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

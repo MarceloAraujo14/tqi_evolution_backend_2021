@@ -3,6 +3,9 @@ package com.tqibank.mapper;
 import com.tqibank.cliente.Cliente;
 import com.tqibank.cliente.request.AtualizacaoRequest;
 import com.tqibank.cliente.request.CadastroRequest;
+import com.tqibank.cliente.request.RetornoRequest;
+
+import java.util.Optional;
 
 public class Mapper {
 
@@ -43,5 +46,16 @@ public class Mapper {
         cliente.getEnderecos().get(0).setCliente(cliente);
 
         return cliente;
+    }
+
+    public static RetornoRequest clienteToRetornoRequest(Cliente cliente){
+        return RetornoRequest.builder()
+                .email(cliente.getEmail())
+                .cpf(cliente.getCpf())
+                .nome(cliente.getNome())
+                .rg(cliente.getRg())
+                .renda(cliente.getRenda())
+                .enderecos(cliente.getEnderecos())
+                .build();
     }
 }

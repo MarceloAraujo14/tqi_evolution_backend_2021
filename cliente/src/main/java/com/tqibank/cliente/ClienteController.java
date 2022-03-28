@@ -4,6 +4,7 @@ package com.tqibank.cliente;
 //import io.swagger.annotations.ApiOperation;
 import com.tqibank.cliente.request.AtualizacaoRequest;
 import com.tqibank.cliente.request.CadastroRequest;
+import com.tqibank.cliente.request.RetornoRequest;
 import com.tqibank.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +29,11 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @Operation(summary = "Retorna a lista de todos os clientes cadastrados.")
-    @GetMapping(value = "/clientes")
-    public ResponseEntity<List<Cliente>> listarClientes(){
-        return clienteService.listarClientes();
-    }
+//    @Operation(summary = "Retorna a lista de todos os clientes cadastrados.")
+//    @GetMapping(value = "/clientes")
+//    public ResponseEntity<List<RetornoRequest>> listarClientes(){
+//        return clienteService.listarClientes();
+//    }
 
     @Operation(summary = "Cadastra um cliente. ")
     @PostMapping(value = "/cliente/cadastro", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,14 +52,14 @@ public class ClienteController {
     }
 
     @Operation(summary = "Retorna um cliente pelo cpf. ")
-    @GetMapping(value = "/cliente/{cpf}")
+    @GetMapping(value = "/cliente/cpf/{cpf}")
     public ResponseEntity<String> retornarClientePorCPF(@PathVariable(value = "cpf") String cpf){
 
         return clienteService.encontrarClientePorCpf(cpf);
     }
 
     @Operation(summary = "Retorna um cliente pelo rg. ")
-    @GetMapping(value = "/cliente/{rg}")
+    @GetMapping(value = "/cliente/rg/{rg}")
     public ResponseEntity<String> retornarClientePorRg(@PathVariable(value = "rg") String rg){
 
         return clienteService.encontrarClientePorRg(rg);

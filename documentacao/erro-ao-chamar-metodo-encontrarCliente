@@ -1,0 +1,11 @@
+Erro:
+- Ao executar a chamada da rota /clientes/rh/{rg} a aplicação quebra
+
+Possiveis causas:
+- Erro no @Pathvariable?
+- Erro no retorno do service?
+- Erro no container?
+- Erro no BD?
+
+Tentativas:
+- 

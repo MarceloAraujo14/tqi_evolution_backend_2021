@@ -222,20 +222,20 @@ class ClienteServiceTest {
 
     }
 
-    @Test
-    void listarClientes() {
-
-        Cliente cliente1 = getCliente();
-        Cliente cliente2 = getCliente();
-        cliente1.setEmail("janny.doe@gmail.com");
-
-        when(repository.findAll()).thenReturn(List.of(cliente1, cliente2));
-
-        ResponseEntity<List<Cliente>> expected = ResponseEntity.ok().body(List.of(cliente1, cliente2));
-        ResponseEntity<List<Cliente>> result = clienteService.listarClientes();
-
-        assertThat(result).isEqualTo(expected);
-        verify(repository, times(1)).findAll();
-
-    }
+//    @Test
+//    void listarClientes() {
+//
+//        Cliente cliente1 = getCliente();
+//        Cliente cliente2 = getCliente();
+//        cliente1.setEmail("janny.doe@gmail.com");
+//
+//        when(repository.findAll()).thenReturn(List.of(cliente1, cliente2));
+//
+//        ResponseEntity<List<Cliente>> expected = ResponseEntity.ok().body(List.of(cliente1, cliente2));
+//        ResponseEntity<List<Cliente>> result = clienteService.listarClientes();
+//
+//        assertThat(result).isEqualTo(expected);
+//        verify(repository, times(1)).findAll();
+//
+//    }
 }
