@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +29,14 @@ public class ClienteService {
         this.repository = repository;
     }
 
-//    public ResponseEntity<List<RetornoRequest>> listarClientes() {
-//        List<RetornoRequest> clientes = repository.findAll();
-//        return ResponseEntity.ok().body(repository.findAll());
-//    }
+    public ResponseEntity<List<RetornoRequest>> listarClientes() {
+        List<RetornoRequest> request = new ArrayList<>();
+        for (Cliente cliente: repository.findAll()
+             ) {
+            request.add(Mapper.clienteToRetornoRequest(cliente));
+        }
+        return ResponseEntity.ok().body(request);
+    }
 
     public ResponseEntity<String> cadastrarCliente(Cliente cliente) {
         try{
@@ -66,7 +71,7 @@ public class ClienteService {
     }
 
     public ResponseEntity<String> encontrarClientePorCpf(String cpf) {
-        if(repository.existsByCpf(cpf)){
+        if(repository.existsByCpf(cpf) && repository.findByCpf(cpf).isPresent()){
             return ResponseEntity.ok().body(repository.findByCpf(cpf).get().toString());
         }
         else {

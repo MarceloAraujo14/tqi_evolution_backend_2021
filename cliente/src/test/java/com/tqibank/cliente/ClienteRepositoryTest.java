@@ -10,7 +10,6 @@ package com.tqibank.cliente;
     - Não salvar um cliente com algum dado nulo;
     - Não salvar um cliente com dados obrigatórios do endereço nulos;
 
-
  */
 
 import com.tqibank.cliente.endereco.Endereco;

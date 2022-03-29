@@ -17,7 +17,7 @@
       <scope value="GLOBAL" />
       <destination value="FILE" />
       <format value="EXCEL" />
-      <charset value="windows-1252" />
+      <charset value="UTF-8" />
     </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -28,7 +28,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="09e71085-ca45-4a3e-be23-8e20e8212b33">
-      <console name="Cliente" type="STANDARD" schema="" session="Main" />
+      <console name="Cliente" type="STANDARD" schema="" session="Main"><![CDATA[select * from clientes;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -72,13 +72,13 @@
           <description value="" />
           <database-type value="POSTGRES" />
           <config-type value="BASIC" />
-          <database-version value="14.0" />
+          <database-version value="14.2" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
           <url-type value="DATABASE" />
           <host value="localhost" />
-          <port value="5432" />
+          <port value="15432" />
           <database value="clientes" />
           <type value="USER_PASSWORD" />
           <user value="financeira" />

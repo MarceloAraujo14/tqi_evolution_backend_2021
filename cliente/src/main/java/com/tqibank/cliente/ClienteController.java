@@ -29,11 +29,11 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-//    @Operation(summary = "Retorna a lista de todos os clientes cadastrados.")
-//    @GetMapping(value = "/clientes")
-//    public ResponseEntity<List<RetornoRequest>> listarClientes(){
-//        return clienteService.listarClientes();
-//    }
+    @Operation(summary = "Retorna a lista de todos os clientes cadastrados.")
+    @GetMapping(value = "/clientes")
+    public ResponseEntity<List<RetornoRequest>> listarClientes(){
+        return clienteService.listarClientes();
+    }
 
     @Operation(summary = "Cadastra um cliente. ")
     @PostMapping(value = "/cliente/cadastro", produces = MediaType.APPLICATION_JSON_VALUE)

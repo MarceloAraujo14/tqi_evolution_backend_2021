@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/ConfigServer/src/main/main.iml" filepath="$PROJECT_DIR$/ConfigServer/src/main/main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/service-discovery/service-discovery.iml" filepath="$PROJECT_DIR$/service-discovery/service-discovery.iml" />
       <module fileurl="file://$PROJECT_DIR$/ConfigServer/src/test/test.iml" filepath="$PROJECT_DIR$/ConfigServer/src/test/test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/userapp/userapp.iml" filepath="$PROJECT_DIR$/userapp/userapp.iml" />
     </modules>
   </component>
 </project>

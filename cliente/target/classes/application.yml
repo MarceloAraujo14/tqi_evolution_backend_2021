@@ -1,6 +1,6 @@
 spring:
   application:
-    name: cliente-prod
+    name: cliente-dev
 
   config:
     import: "optional:configserver:"

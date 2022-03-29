@@ -4,16 +4,8 @@
     <file url="file://$PROJECT_DIR$/cadastro/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cadastro/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cliente/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cliente/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/config-server/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/gateway/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/service-discovery/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/service-discovery/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/userapp/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/userapp/src/main/resources" charset="UTF-8" />
   </component>
 </project>

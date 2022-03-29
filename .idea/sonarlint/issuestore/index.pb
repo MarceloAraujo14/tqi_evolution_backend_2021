@@ -1,8 +1,6 @@
 
 t
 Dcliente/src/main/java/com/tqibank/cliente/endereco/tipoEndereco.java,3\c\3c32670e99509c8d64ac4a6770af31ae959133d1
-t
-Dcliente/src/test/java/com/tqibank/cliente/ClienteRepositoryTest.java,b\a\ba9174b71d38de4ac7ba23e5def91a98247491a6
 {
 Kcliente/src/main/java/com/tqibank/validation/constraints/DuplicatedCPF.java,d\8\d862253fbeac53d8fa46461283942f5a8626c6d3
 y
@@ -35,5 +33,23 @@ p
 @cliente/src/main/java/com/tqibank/cliente/endereco/Endereco.java,f/a/fa0e5b280e527eb3c72a20147f35e323a05c2739
 k
 ;cliente/src/main/java/com/tqibank/config/SwaggerConfig.java,1/d/1dcdb1eb71945811644328dab749548e8330fadc
-p
-@cliente/src/main/java/com/tqibank/cliente/ClienteRepository.java,3/3/331b927a482675336c11ae404170c27d97e04412
+H
+config-server/.gitignore,7/0/700060b45b55a30aeb4a90eb5b60fa8e2bcc2fc7
+B
+config-server/mvnw,1/7/173763af57b6fde362a1515ed21f9f70eae4a329
+F
+config-server/mvnw.cmd,0/9/09d6c851d3b5e0951a6f90053fc57fac349c8d8e
+c
+3config-server/.mvn/wrapper/maven-wrapper.properties,b/0/b02081f63fe3e34af1c08ff9908f1e4413a2c793
+E
+config-server/pom.xml,a/2/a2f9618c8ad821b143a07a29a9805fcb0b2df470
+k
+;documentacao/(resolvido)erro-conexao-api-container-postgres,b/7/b7e56dca5480a6f7ffc9b285ca9a4a9f11b82701
+7
+pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+y
+Icliente/src/main/java/com/tqibank/cliente/request/AtualizacaoRequest.java,9/b/9b66d8814ceffc4179c0a66ce44f20f2ede7efae
+f
+6cliente/src/main/java/com/tqibank/cliente/Cliente.java,c/2/c24cd3919a4d73aa46eea6d58640bf2e2695a4f9
+d
+4cliente/src/main/java/com/tqibank/mapper/Mapper.java,6/f/6f3ded8fc3cd621d95937a9267711ea2aa0ef523
