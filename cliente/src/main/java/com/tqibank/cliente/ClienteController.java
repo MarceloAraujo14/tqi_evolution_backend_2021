@@ -2,9 +2,9 @@ package com.tqibank.cliente;
 //
 //import io.swagger.annotations.Api;
 //import io.swagger.annotations.ApiOperation;
-import com.tqibank.cliente.request.AtualizacaoRequest;
-import com.tqibank.cliente.request.CadastroRequest;
-import com.tqibank.cliente.request.RetornoRequest;
+import com.tqibank.cliente.dto.UpdateRequest;
+import com.tqibank.cliente.dto.RegistrationRequest;
+import com.tqibank.cliente.dto.ClienteResponse;
 import com.tqibank.mapper.Mapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,17 +31,17 @@ public class ClienteController {
 
     @Operation(summary = "Retorna a lista de todos os clientes cadastrados.")
     @GetMapping(value = "/clientes")
-    public ResponseEntity<List<RetornoRequest>> listarClientes(){
+    public ResponseEntity<List<ClienteResponse>> listarClientes(){
         return clienteService.listarClientes();
     }
 
     @Operation(summary = "Cadastra um cliente. ")
     @PostMapping(value = "/cliente/cadastro", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> cadastrarCliente(@RequestBody @Valid CadastroRequest request){
+    public ResponseEntity<String> cadastrarCliente(@RequestBody @Valid RegistrationRequest request){
 
         log.info("novo cadastro de cliente {}", request);
 
-        return clienteService.cadastrarCliente(Mapper.requestToCliente(request));
+        return clienteService.cadastrarCliente(Mapper.toCliente(request));
     }
 
     @Operation(summary = "Retorna um cliente pelo email. ")
@@ -67,7 +67,7 @@ public class ClienteController {
 
     @Operation(summary = "Atualiza os dados de um cliente. ")
     @PostMapping(value = "/cliente/{email}")
-    public ResponseEntity<String> atualizarCliente(@Valid @RequestBody AtualizacaoRequest request, @PathVariable(value = "email") String email){
+    public ResponseEntity<String> atualizarCliente(@Valid @RequestBody UpdateRequest request, @PathVariable(value = "email") String email){
 
         return clienteService.atualizarCliente(request, email);
     }

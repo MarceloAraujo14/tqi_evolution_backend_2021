@@ -12,7 +12,7 @@ package com.tqibank.cliente;
 
 import com.tqibank.cliente.endereco.Endereco;
 import com.tqibank.cliente.endereco.tipoEndereco;
-import com.tqibank.cliente.request.AtualizacaoRequest;
+import com.tqibank.cliente.dto.UpdateRequest;
 import com.tqibank.exceptions.DuplicatedEmailException;
 import jdk.jfr.Name;
 import org.junit.jupiter.api.Test;
@@ -190,7 +190,7 @@ class ClienteServiceTest {
 
         String email = "jhon.doe@gmail.com";
 
-        AtualizacaoRequest clienteNovo = AtualizacaoRequest.builder()
+        UpdateRequest clienteNovo = UpdateRequest.builder()
                 .nome("Jhon Doe")
                 .senha("Abc/12345678@")
                 .renda(new BigDecimal("5.000"))

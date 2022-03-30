@@ -1,4 +1,4 @@
-package com.tqibank.cliente.request;
+package com.tqibank.cliente.dto;
 
 import com.tqibank.cliente.endereco.Endereco;
 import lombok.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Builder
-public class RetornoRequest {
+public class ClienteResponse {
 
     private String email;
 

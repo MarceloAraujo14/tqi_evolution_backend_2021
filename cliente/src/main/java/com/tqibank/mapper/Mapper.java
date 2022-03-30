@@ -1,61 +1,38 @@
 package com.tqibank.mapper;
 
 import com.tqibank.cliente.Cliente;
-import com.tqibank.cliente.request.AtualizacaoRequest;
-import com.tqibank.cliente.request.CadastroRequest;
-import com.tqibank.cliente.request.RetornoRequest;
+import com.tqibank.cliente.dto.UpdateRequest;
+import com.tqibank.cliente.dto.RegistrationRequest;
+import com.tqibank.cliente.dto.ClienteResponse;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class Mapper {
 
-    private Mapper() {
+    @Autowired
+    private ModelMapper mapper;
+
+    public Cliente toCliente(RegistrationRequest registrationRequest){
+        return mapper.map(registrationRequest, Cliente.class);
     }
 
-    public static Cliente requestToCliente(CadastroRequest cadastroRequest){
-
-        Cliente cliente = Cliente.builder()
-                .email(cadastroRequest.getEmail())
-                .nome(cadastroRequest.getNome())
-                .cpf(cadastroRequest.getCpf())
-                .rg(cadastroRequest.getRg())
-                .senha(cadastroRequest.getSenha())
-                .renda(cadastroRequest.getRenda())
-                .enderecos(cadastroRequest.getEnderecos())
-                .build();
-
-        cliente.getEnderecos().get(0).setCliente(cliente);
-
-        return cliente;
+    public Cliente updateToCliente(UpdateRequest request) {
+        return mapper.map(request, Cliente.class);
     }
 
-
-
-    public static Cliente atualizacaoRequestToCliente(AtualizacaoRequest request, Cliente clienteAntigo) {
-
-        Cliente cliente = Cliente.builder()
-                .email(clienteAntigo.getEmail())
-                .nome(request.getNome())
-                .cpf(clienteAntigo.getCpf())
-                .rg(clienteAntigo.getRg())
-                .senha(request.getSenha())
-                .renda(request.getRenda())
-                .enderecos(clienteAntigo.getEnderecos())
-                .build();
-
-        cliente.getEnderecos().get(0).setCliente(cliente);
-
-        return cliente;
+    public ClienteResponse toClienteResponse(Cliente cliente){
+        return mapper.map(cliente, ClienteResponse.class);
     }
 
-    public static RetornoRequest clienteToRetornoRequest(Cliente cliente){
-        return RetornoRequest.builder()
-                .email(cliente.getEmail())
-                .cpf(cliente.getCpf())
-                .nome(cliente.getNome())
-                .rg(cliente.getRg())
-                .renda(cliente.getRenda())
-                .enderecos(cliente.getEnderecos())
-                .build();
+    public List<ClienteResponse> toListResponse(List<Cliente> clientes){
+        return clientes.stream().map(this::toClienteResponse).collect(Collectors.toList());
     }
 }

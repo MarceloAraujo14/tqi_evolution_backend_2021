@@ -17,7 +17,7 @@
       <scope value="GLOBAL" />
       <destination value="FILE" />
       <format value="EXCEL" />
-      <charset value="UTF-8" />
+      <charset value="windows-1252" />
     </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -28,7 +28,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="09e71085-ca45-4a3e-be23-8e20e8212b33">
-      <console name="Cliente" type="STANDARD" schema="" session="Main"><![CDATA[select * from clientes;]]></console>
+      <console name="Cliente" type="STANDARD" schema="" session="Main">select * from clientes;</console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
